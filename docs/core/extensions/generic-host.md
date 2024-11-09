@@ -3,7 +3,7 @@ title: .NET Generic Host
 author: IEvangelist
 description: Learn about the .NET Generic Host, which is responsible for app startup and lifetime management.
 ms.author: dapine
-ms.date: 03/26/2024
+ms.date: 09/11/2024
 ---
 
 # .NET Generic Host
@@ -127,6 +127,14 @@ When you call either <xref:Microsoft.Extensions.Hosting.IHostBuilder.Build?displ
 - [IHostLifetime](#ihostlifetime)
 - [IHostEnvironment](#ihostenvironment)
 
+## Additional scenario-based host builders
+
+If you're building for the web or writing a distributed application, you might need to use a different host builder. Consider the following list of additional host builders:
+
+- <xref:Aspire.Hosting.DistributedApplicationBuilder>: A builder for creating distributed apps. For more information, see [.NET Aspire](/dotnet/aspire).
+- <xref:Microsoft.AspNetCore.Builder.WebApplicationBuilder>: A builder for web applications and services. For more information, see [ASP.NET Core](/aspnet/core).
+- <xref:Microsoft.AspNetCore.Hosting.WebHostBuilder>: A builder for `IWebHost`. For more information, see [ASP.NET Core web host](/aspnet/core/fundamentals/host/web-host).
+
 ## `IHostApplicationLifetime`
 
 Inject the <xref:Microsoft.Extensions.Hosting.IHostApplicationLifetime> service into any class to handle post-startup and graceful shutdown tasks. Three properties on the interface are cancellation tokens used to register app start and app stop event handler methods. The interface also includes a <xref:Microsoft.Extensions.Hosting.IHostApplicationLifetime.StopApplication> method.
@@ -188,11 +196,11 @@ Host configuration is used to configure properties of the [IHostEnvironment](#ih
 
 # [IHostApplicationBuilder](#tab/appbuilder)
 
-The host configuration is available in <xref:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Configuration?displayProperty=nameWithType> property and the environment implementation is available in <xref:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Environment?displayProperty=nameWithType> property. To configure the host, access the `Configuration` property and call any of the available extension methods.
+The host configuration is available in <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Configuration?displayProperty=nameWithType> property and the environment implementation is available in <xref:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Environment?displayProperty=nameWithType> property. To configure the host, access the `Configuration` property and call any of the available extension methods.
 
 To add host configuration, consider the following example:
 
-:::code language="csharp" source="snippets/configuration/console-host/Program.cs" highlight="6-9":::
+:::code language="csharp" source="snippets/configuration/console-host/Program.cs" highlight="6-8":::
 
 The preceding code:
 

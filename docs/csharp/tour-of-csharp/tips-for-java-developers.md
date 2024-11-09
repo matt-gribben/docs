@@ -1,5 +1,5 @@
 ---
-title: A tour of C# - Tips for Java Developers
+title: Tips for Java Developers
 description: Are you new to C#, but experienced in Java? Here's a roadmap of what's familiar, and new features to learn in C#, and features in Java that aren't in C#.
 ms.date: 04/03/2024
 ---
@@ -7,7 +7,7 @@ ms.date: 04/03/2024
 
 C# and Java have many similarities. As you learn C#, you can apply much of the knowledge you already have from programming in Java:
 
-1. ***Similar syntax***: Both Java and C# are in the C family of languages. That similarity means you can already read and understand C#. There are some differences, but most of the syntax is the same as Java, and C. The curly braces and semicolons are familiar. The control statements like `if`, `else`, `switch` are the same. The looping statements of `for`, `while`, and `do`...`while` are same. The same keywords for `class`, `struct`, and `interface` are in both languages. The access modifiers from `public` to `private` are the same. Even many of the builtin types use the same keywords: `int`, `string`, and `double`.
+1. ***Similar syntax***: Both Java and C# are in the C family of languages. That similarity means you can already read and understand C#. There are some differences, but most of the syntax is the same as Java, and C. The curly braces and semicolons are familiar. The control statements like `if`, `else`, `switch` are the same. The looping statements of `for`, `while`, and `do`...`while` are same. The same keywords for `class` and `interface` are in both languages. The access modifiers from `public` to `private` are the same. Even many of the builtin types use the same keywords: `int`, `string`, and `double`.
 1. ***Object-oriented paradigm***: Both Java and C# are object-oriented languages. The concepts of polymorphism, abstraction, and encapsulation apply in both languages. Both added new constructs, but the core features are still relevant.
 1. ***Strongly typed***: Both Java and C# are strongly typed languages. You declare the data type of variables, either explicitly or implicitly. The compiler enforces type safety. The compiler catches type-related errors in your code, before you run the code.
 1. ***Cross-platform***: Both Java and C# are cross-platform. You can run your development tools on your favorite platform. Your application can run on multiple platforms. Your development platform isn't required to match your target platform.
@@ -28,7 +28,7 @@ There are other features in C# that aren't in Java. You'll see features like [`a
 
 There are also some similar features between C# and Java that have subtle but important differences:
 
-1. [***Properties***](../properties.md) and [***Indexers***](../indexers.md): Both properties and indexers (treating a class like an array or dictionary) have language support. In Java, they're naming conventions for methods starting with `get` and `set`.
+1. [***Properties***](../programming-guide/classes-and-structs/properties.md) and [***Indexers***](/dotnet/csharp/programming-guide/indexers): Both properties and indexers (treating a class like an array or dictionary) have language support. In Java, they're naming conventions for methods starting with `get` and `set`.
 1. [***Records***](../fundamentals/types/records.md): In C#, records can be either `class` (reference) or `struct` (value) types. C# records can be immutable, but aren't required to be immutable.
 1. [***Tuples***](../language-reference/builtin-types/value-tuples.md) have different syntax in C# and Java.
 1. [***Attributes***](../language-reference/attributes/general.md) are similar to Java annotations.

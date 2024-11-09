@@ -1,6 +1,6 @@
 ---
 title: Trim self-contained applications
-description: Learn how to trim self-contained apps to reduce their size. .NET Core bundles the runtime with an app that is published self-contained and generally includes more of the runtime then is necessary.
+description: Learn how to trim self-contained apps to reduce their size. .NET Core bundles the runtime with an app that is published self-contained and generally includes more of the runtime than is necessary.
 author: jamshedd
 ms.author: jamshedd
 ms.date: 04/03/2020
@@ -78,10 +78,6 @@ For more information, see [Publish .NET apps with .NET CLI](../deploy-with-cli.m
 01. Choose **Publish** to publish your app trimmed.
 
 For more information, see [Publish .NET Core apps with Visual Studio](../deploy-with-vs.md).
-
-### Publish with Visual Studio for Mac
-
-Visual Studio for Mac doesn't provide options to publish your app. You'll need to publish manually by following the instructions from the [Publishing with the CLI](#publish-with-the-cli) section. For more information, see [Publish .NET apps with .NET CLI](../deploy-with-cli.md).
 
 ## See also
 

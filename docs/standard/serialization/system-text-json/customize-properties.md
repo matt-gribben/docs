@@ -1,7 +1,7 @@
 ---
 title: How to customize property names and values with System.Text.Json
 description: "Learn how to customize property names and values when serializing with System.Text.Json in .NET."
-ms.date: 10/16/2023
+ms.date: 10/22/2024
 zone_pivot_groups: dotnet-version
 no-loc: [System.Text.Json, Newtonsoft.Json]
 dev_langs:
@@ -13,13 +13,15 @@ helpviewer_keywords:
   - "serialization"
   - "objects, serializing"
 ms.topic: how-to
+ms.collection: ce-skilling-ai-copilot
+ms.custom: vs-copilot-horizontal
 ---
 
 # How to customize property names and values with System.Text.Json
 
 By default, property names and dictionary keys are unchanged in the JSON output, including case. Enum values are represented as numbers. And properties are serialized in the order they're defined. However, you can customize these behaviors by:
 
-- Specifying specific serialized property names.
+- Specifying specific serialized property and enum member names.
 - Using a built-in [naming policy](xref:System.Text.Json.JsonNamingPolicy), such as camelCase, snake_case, or kebab-case, for property names and dictionary keys.
 - Using a custom naming policy for property names and dictionary keys.
 - Serializing enum values as strings, with or without a naming policy.
@@ -27,6 +29,9 @@ By default, property names and dictionary keys are unchanged in the JSON output,
 
 > [!NOTE]
 > The [web default](configure-options.md#web-defaults-for-jsonserializeroptions) naming policy is camel case.
+
+> [!TIP]
+> You can use AI assistance to [customize property names and values with GitHub Copilot](#use-github-copilot-to-customize-property-names-and-order).
 
 For other scenarios that require special handling of JSON property names and values, you can [implement custom converters](converters-how-to.md).
 
@@ -151,17 +156,7 @@ Naming policies for dictionary keys apply to serialization only. If you deserial
 
 ## Enums as strings
 
-:::zone pivot="dotnet-8-0"
-
 By default, enums are serialized as numbers. To serialize enum names as strings, use the <xref:System.Text.Json.Serialization.JsonStringEnumConverter> or <xref:System.Text.Json.Serialization.JsonStringEnumConverter%601> converter. Only <xref:System.Text.Json.Serialization.JsonStringEnumConverter%601> is supported by the Native AOT runtime.
-
-:::zone-end
-
-:::zone pivot="dotnet-7-0,dotnet-6-0"
-
-By default, enums are serialized as numbers. To serialize enum names as strings, use the <xref:System.Text.Json.Serialization.JsonStringEnumConverter> converter.
-
-:::zone-end
 
 For example, suppose you need to serialize the following class that has an enum:
 
@@ -198,7 +193,7 @@ The built-in <xref:System.Text.Json.Serialization.JsonStringEnumConverter> can d
 :::code language="csharp" source="snippets/how-to/csharp/RoundtripEnumAsString.cs" id="Deserialize":::
 :::code language="vb" source="snippets/how-to/vb/RoundtripEnumAsString.vb" id="Deserialize":::
 
-:::zone pivot="dotnet-8-0"
+### JsonConverterAttribute
 
 You can also specify the converter to use by annotating your enum with <xref:System.Text.Json.Serialization.JsonConverterAttribute>. The following example shows how to specify the <xref:System.Text.Json.Serialization.JsonStringEnumConverter%601> (available in .NET 8 and later versions) by using the <xref:System.Text.Json.Serialization.JsonConverterAttribute> attribute. For example, suppose you need to serialize the following class that has an enum:
 
@@ -208,7 +203,7 @@ The following sample code serializes the enum names instead of the numeric value
 
 :::code language="csharp" source="snippets/how-to/csharp/RoundtripEnumUsingConverterAttribute.cs" id="Serialize":::
 
-The resulting JSON looks like the following example:
+The resulting JSON looks like this:
 
 ```json
 {
@@ -218,9 +213,31 @@ The resulting JSON looks like the following example:
 }
 ```
 
-To use the converter with source generation, see [Serialize enum fields as strings](source-generation.md#serialize-enum-fields-as-strings).
+### Custom enum member names
 
-:::zone-end
+Starting in .NET 9, you can customize the names of individual enum members for types that are serialized as strings. To customize an enum member name, annotate it with the [JsonStringEnumMemberName attribute](xref:System.Text.Json.Serialization.JsonStringEnumMemberNameAttribute).
+
+For example, suppose you need to serialize the following class that has an enum with a custom member name:
+
+:::code language="csharp" source="snippets/how-to/csharp/WeatherForecast.cs" id="WFWithEnumCustomName":::
+
+The following sample code serializes the enum names instead of the numeric values:
+
+:::code language="csharp" source="snippets/how-to/csharp/SerializeEnumCustomName.cs" id="Serialize":::
+
+The resulting JSON looks like this:
+
+```json
+{
+  "Date": "2019-08-01T00:00:00-07:00",
+  "TemperatureCelsius": 25,
+  "Sky": "Partly cloudy"
+}
+```
+
+### Source generation
+
+To use the converter with source generation, see [Serialize enum fields as strings](source-generation.md#serialize-enum-fields-as-strings).
 
 ## Configure the order of serialized properties
 
@@ -228,7 +245,110 @@ By default, properties are serialized in the order in which they're defined in t
 
 :::code language="csharp" source="snippets/how-to-6-0/csharp/PropertyOrder.cs":::
 
+## Use Github Copilot to customize property names and order
+
+You can use GitHub Copilot in your IDE to generate code to customize names and order of serialized properties.
+
+If you're using [Visual Studio 2022 version 17.8 or later](/visualstudio/releases/2022/release-notes), you can try the AI-driven [GitHub Copilot in Visual Studio](/visualstudio/ide/visual-studio-github-copilot-install-and-states) to generate code that uses `System.Text.Json` to customize property names and order in the JSON output from serializtion. Submit your question as a prompt in the Copilot chat window, as in the following example. You can also submit prompts using [inline chat](/visualstudio/ide/visual-studio-github-copilot-chat#ask-questions-in-the-inline-chat-view) in the editor window itself.
+
+> [!NOTE]
+> GitHub Copilot is powered by AI, so surprises and mistakes are possible. Make sure to verify any generated code or suggestions. For more information about the general use of GitHub Copilot, product impact, human oversight, and privacy, see [GitHub Copilot FAQs](https://github.com/features/copilot#faq).
+
+The following example shows you how to use Copilot to modify existing code to customize property names and order when serializing to JSON.
+
+1. Add the following C# example code to a code file `Example.cs` in your editor.
+   In Visual Studio, you can use a C# console application project to try this example.
+
+   :::code language="csharp" source="snippets/how-to-6-0/csharp/copilot-example.cs":::
+
+   `Example.cs` code does the following:
+
+   - Creates an instance of the `Person` class and initializes its properties with values.
+   - Serializes the `person` object to a JSON string using `JsonSerializer.Serialize`.
+   - Prints the following JSON string to the console:
+
+   ```json
+   {"FirstName":"John","LastName":"Doe","Age":30,"Country":"USA"}
+   ```
+
+1. In Copilot Chat, enter the following prompt to modify the code to customize names and order of the JSON serialization output.
+
+   > `#Example.cs` modify code to use `System.Text.Json` to customize property names and order of JSON output from serialization. Set property names: FirstName to first_name, LastName to last_name. Set order to: Country, FirstName, LastName, Age. Provide customized serialization output.
+
+   `#Example.cs` in the prompt provides a [file reference as context](/visualstudio/ide/copilot-chat-context#reference-a-file) to Copilot. You can customize the prompt to output a JSON string with property names and values that suit your requirements. To set intent and get better answers with scoped context, you can use chat features such as [slash commands, references to files, methods, or classes, and threads](/visualstudio/ide/copilot-chat-context).
+
+   The following output shows an example Copilot Chat response:
+
+   ```output
+   To customize the property names and order of the JSON output using System.Text.Json, you can use the JsonPropertyName attribute to rename properties and the JsonPropertyOrder attribute to set the order. Here's how you can modify your code:
+
+   using System.Text.Json;
+   using System.Text.Json.Serialization;
+
+   public class Person
+   {
+       [JsonPropertyName("first_name")]
+       [JsonPropertyOrder(2)]
+       public string? FirstName { get; set; }
+
+       [JsonPropertyName("last_name")]
+       [JsonPropertyOrder(3)]
+       public string? LastName { get; set; }
+
+       [JsonPropertyOrder(4)]
+       public int Age { get; set; }
+
+       [JsonPropertyOrder(1)]
+       public string? Country { get; set; }
+   }
+
+   public class Program
+   {
+       public static void Main()
+       {
+           var person = new Person
+           {
+               FirstName = "John",
+               LastName = "Doe",
+               Age = 30,
+               Country = "USA"
+           };
+
+           string jsonString = JsonSerializer.Serialize(person, new JsonSerializerOptions { WriteIndented = true });
+           Console.WriteLine(jsonString);
+       }
+   }
+
+   **Explanation:**
+
+   1. Renaming Properties: The JsonPropertyName attribute is used to rename FirstName to first_name and LastName to last_name.
+   2. Ordering Properties: The JsonPropertyOrder attribute is used to set the order of the properties in the JSON output. The order is set as:
+      • Country (Order 1)
+      • FirstName (Order 2)
+      • LastName (Order 3)
+      • Age (Order 4)
+   3. Indented JSON: The JsonSerializerOptions with WriteIndented = true is used to make the JSON output more readable.
+
+   **Customized Serialization Output:**
+   {
+     "Country": "USA",
+     "first_name": "John",
+     "last_name": "Doe",
+     "Age": 30
+   }
+
+   This ensures that the JSON output has the customized property names and the specified order.
+   ```
+
+When Copilot returns a code block, the response includes options to copy the code, insert the code into a new file, or preview the code output.
+
+> [!NOTE]
+> Your results might be different from what's shown in the example responses. AI models are non-deterministic, which means that they can return different responses when asked the same question. This might be due to additional learning and adaption over time, language variation, changes in context, such as your chat history, and more.
+
 ## See also
 
 - [System.Text.Json overview](overview.md)
 - [How to serialize and deserialize JSON](how-to.md)
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/)
+- [GitHub Copilot in Visual Studio](/visualstudio/ide/visual-studio-github-copilot-install-and-states)
+- [GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/overview)

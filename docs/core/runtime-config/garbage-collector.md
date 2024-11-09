@@ -1,7 +1,7 @@
 ---
 title: Garbage collector config settings
 description: Learn about run-time settings for configuring how the garbage collector manages memory for .NET apps.
-ms.date: 04/20/2022
+ms.date: 08/09/2024
 ---
 # Runtime configuration options for garbage collection
 
@@ -218,11 +218,11 @@ Use the following settings to manage the garbage collector's memory and processo
 - [Affinitize ranges](#affinitize-ranges)
 - [CPU groups](#cpu-groups)
 - [Heap count](#heap-count)
-- [Heap limit](#heap-limit)
-- [Heap limit percent](#heap-limit-percent)
+- [Heap hard limit](#heap-hard-limit)
+- [Heap hard limit percent](#heap-hard-limit-percent)
+- [Per-object-heap hard limits](#per-object-heap-hard-limits)
+- [Per-object-heap hard limit percents](#per-object-heap-hard-limit-percents)
 - [High memory percent](#high-memory-percent)
-- [Per-object-heap limits](#per-object-heap-limits)
-- [Per-object-heap limit percents](#per-object-heap-limit-percents)
 - [Retain VM](#retain-vm)
 
 For more information about some of these settings, see the [Middle ground between workstation and server GC](https://devblogs.microsoft.com/dotnet/middle-ground-between-server-and-workstation-gc/) blog entry.
@@ -417,15 +417,12 @@ For more information about some of these settings, see the [Middle ground betwee
 }
 ```
 
-### Heap limit
+### Heap hard limit
 
-- Specifies the maximum commit size, in bytes, for the GC heap and GC bookkeeping.
+- The heap hard limit is defined as the maximum commit size, in bytes, for the GC heap and GC bookkeeping.
 - This setting only applies to 64-bit computers.
-- This setting is ignored if the [Per-object-heap limits](#per-object-heap-limits) are configured.
-- The default value, which only applies in certain cases, is the greater of 20 MB or 75% of the memory limit on the container. The default value applies if:
-
-  - The process is running inside a container that has a specified memory limit.
-  - [System.GC.HeapHardLimitPercent](#heap-limit-percent) is not set.
+- If this limit isn't configured but the process is running in a memory-constrained environment, that is, inside a container with a specified memory limit, a default value is set. That default is the greater of 20 MB or 75% of the memory limit on the container.
+- This setting is ignored if the [Per-object-heap hard limits](#per-object-heap-hard-limits) are configured.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
@@ -462,17 +459,11 @@ For more information about some of these settings, see the [Middle ground betwee
 > [!TIP]
 > If you're setting the option in *runtimeconfig.json*, specify a decimal value. If you're setting the option as an environment variable, specify a hexadecimal value. For example, to specify a heap hard limit of 200 mebibytes (MiB), the values would be 209715200 for the JSON file and 0xC800000 or C800000 for the environment variable.
 
-### Heap limit percent
+### Heap hard limit percent
 
-- Specifies the allowable GC heap usage as a percentage of the total physical memory.
-- If [System.GC.HeapHardLimit](#heap-limit) is also set, this setting is ignored.
+- Specifies the heap hard limit as a percentage of the total physical memory. If the process is running in a memory-constrained environment, that is, inside a container with a specified memory limit, the total physical memory is the memory limit; otherwise it's what's available on the machine.
 - This setting only applies to 64-bit computers.
-- If the process is running inside a container that has a specified memory limit, the percentage is calculated as a percentage of that memory limit.
-- This setting is ignored if the [Per-object-heap limits](#per-object-heap-limits) are configured.
-- The default value, which only applies in certain cases, is the greater of 20 MB or 75% of the memory limit on the container. The default value applies if:
-
-  - The process is running inside a container that has a specified memory limit.
-  - [System.GC.HeapHardLimit](#heap-limit) is not set.
+- This setting is ignored if the [Per-object-heap hard limits](#per-object-heap-hard-limits) are configured or the [heap hard limit](#heap-hard-limit) is configured.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
@@ -509,9 +500,9 @@ For more information about some of these settings, see the [Middle ground betwee
 > [!TIP]
 > If you're setting the option in *runtimeconfig.json*, specify a decimal value. If you're setting the option as an environment variable, specify a hexadecimal value. For example, to limit the heap usage to 30%, the values would be 30 for the JSON file and 0x1E or 1E for the environment variable.
 
-### Per-object-heap limits
+### Per-object-heap hard limits
 
-You can specify the GC's allowable heap usage on a per-object-heap basis. The different heaps are the large object heap (LOH), small object heap (SOH), and pinned object heap (POH).
+You can specify the GC's heap hard limit on a per-object-heap basis. The different heaps are the large object heap (LOH), small object heap (SOH), and pinned object heap (POH).
 
 - If you specify a value for any of the `DOTNET_GCHeapHardLimitSOH`, `DOTNET_GCHeapHardLimitLOH`, or `DOTNET_GCHeapHardLimitPOH` settings, you must also specify a value for `DOTNET_GCHeapHardLimitSOH` and `DOTNET_GCHeapHardLimitLOH`. If you don't, the runtime will fail to initialize.
 - The default value for `DOTNET_GCHeapHardLimitPOH` is 0. `DOTNET_GCHeapHardLimitSOH` and `DOTNET_GCHeapHardLimitLOH` don't have default values.
@@ -539,9 +530,9 @@ These configuration settings don't have specific MSBuild properties. However, yo
 > [!TIP]
 > If you're setting the option in *runtimeconfig.json*, specify a decimal value. If you're setting the option as an environment variable, specify a hexadecimal value. For example, to specify a heap hard limit of 200 mebibytes (MiB), the values would be 209715200 for the JSON file and 0xC800000 or C800000 for the environment variable.
 
-### Per-object-heap limit percents
+### Per-object-heap hard limit percents
 
-You can specify the GC's allowable heap usage on a per-object-heap basis. The different heaps are the large object heap (LOH), small object heap (SOH), and pinned object heap (POH).
+You can specify the GC's heap hard limit on a per-object-heap basis. The different heaps are the large object heap (LOH), small object heap (SOH), and pinned object heap (POH).
 
 - If you specify a value for any of the `DOTNET_GCHeapHardLimitSOHPercent`, `DOTNET_GCHeapHardLimitLOHPercent`, or `DOTNET_GCHeapHardLimitPOHPercent` settings, you must also specify a value for `DOTNET_GCHeapHardLimitSOHPercent` and `DOTNET_GCHeapHardLimitLOHPercent`. If you don't, the runtime will fail to initialize.
 - These settings are ignored if `DOTNET_GCHeapHardLimitSOH`, `DOTNET_GCHeapHardLimitLOH`, and `DOTNET_GCHeapHardLimitPOH` are specified.
@@ -680,7 +671,7 @@ Project file:
 
 [!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
-#### Examples
+### Examples
 
 *runtimeconfig.json* file:
 
@@ -709,13 +700,38 @@ Project file:
 
 ## Standalone GC
 
-- Specifies the name of a GC native library that the runtime loads in place of the default GC implementation. This native library needs to reside in the same directory as the .NET runtime (**coreclr.dll** on Windows, **libcoreclr.so** on Linux).
+To use a standalone garbage collector instead of the default GC implementation, you can specify either the *[path](#path)* (in .NET 9 and later versions) or the *[name](#name)* of a GC native library.
+
+### Path
+
+- Specifies the full path of a GC native library that the runtime loads in place of the default GC implementation. To be secure, this location should be protected from potentially malicious tampering.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
-| **runtimeconfig.json** | N/A | N/A | N/A |
-| **Environment variable** | `COMPlus_GCName` | *string_path* | .NET Core 2.0 |
-| **Environment variable** | `DOTNET_GCName` | *string_path* | .NET 6 |
+| **runtimeconfig.json** | `System.GC.Path` | *string_path* | .NET 9 |
+| **Environment variable** | `DOTNET_GCPath` | *string_path* | .NET 9 |
+
+### Name
+
+- Specifies the name of a GC native library that the runtime loads in place of the default GC implementation. The behavior changed in .NET 9 with the introduction of the [Path](#path) config.
+
+  In .NET 8 and previous versions:
+
+  - If only a name of the library is specified, the library must reside in the same directory as the .NET runtime (*coreclr.dll* on Windows, *libcoreclr.so* on Linux, or *libcoreclr.dylib* on OSX).
+  - The value can also be a relative path, for example, if you specify "..\clrgc.dll" on Windows, *clrgc.dll* is loaded from the parent directory of the .NET runtime directory.
+
+  In .NET 9 and later versions, this value specifies a file name only (paths aren't allowed):
+
+  - .NET searches for the name you specify in the directory where the assembly that contains your app's `Main` method resides.
+  - If the file isn't found, the .NET runtime directory is searched.
+
+- This configuration setting is ignored if the [Path](#path) config is specified.
+
+| | Setting name | Values | Version introduced |
+| - | - | - | - |
+| **runtimeconfig.json** | `System.GC.Name` | *string_name* | .NET 7 |
+| **Environment variable** | `COMPlus_GCName` | *string_name* | .NET Core 2.0 |
+| **Environment variable** | `DOTNET_GCName` | *string_name* | .NET 6 |
 
 ## Conserve memory
 
@@ -746,3 +762,16 @@ Example *app.config* file:
 
 > [!TIP]
 > Experiment with different numbers to see which value works best for you. Start with a value between 5 and 7.
+
+## Dynamic adaptation to application sizes (DATAS)
+
+- Configures the garbage collector to use DATAS. DATAS adapts to application memory requirements, meaning the app heap size should be roughly proportional to the long-lived data size.
+- Enabled by default starting in .NET 9.
+
+|                          | Setting name               | Values    | Version introduced |
+|--------------------------|----------------------------|-----------|--------------------|
+| **Environment variable** | `DOTNET_GCDynamicAdaptationMode`  | `1` - enabled<br/> `0` - disabled | .NET 8 |
+| **MSBuild property** | `GarbageCollectionAdaptationMode` | `1` - enabled<br/> `0` - disabled | .NET 8 |
+| **runtimeconfig.json**   | `System.GC.DynamicAdaptationMode` | `1` - enabled<br/> `0` - disabled | .NET 8 |
+
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]

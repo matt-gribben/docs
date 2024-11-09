@@ -12,11 +12,36 @@ Microsoft.Testing.Platform is a lightweight and portable alternative to [VSTest]
 
 `Microsoft.Testing.Platform` is open source. You can find `Microsoft.Testing.Platform` code in [microsoft/testfx](https://github.com/microsoft/testfx/tree/main/src/Platform/Microsoft.Testing.Platform) GitHub repository.
 
+## Microsoft.Testing.Platform pillars
+
+This new testing platform is built on the .NET Developer Experience Testing team's experience and aims to address the challenges encountered since the release of .NET Core in 2016. While there's a high level of compatibility between the .NET Framework and the .NET Core/.NET, some key features like the plugin-system and the new possible form factors of .NET compilations have made it complex to evolve or fully support the new runtime feature with the current [VSTest platform](https://github.com/microsoft/vstest) architecture.
+
+The main driving factors for the evolution of the new testing platform are detailed in the following:
+
+* **Determinism**: Ensuring that running the same tests in different contexts (local, CI) will produce the same result. The new runtime does not rely on reflection or any other dynamic .NET runtime feature to coordinate a test run.
+
+* **Runtime transparency**: The test runtime does not interfere with the test framework code, it does not create isolated contexts like `AppDomain` or `AssemblyLoadContext`, and it does not use reflection or custom assembly resolvers.
+
+* **Compile-time registration of extensions**: Extensions, such as test frameworks and in/out-of-process extensions, are registered during compile-time to ensure determinism and to facilitate detection of inconsistencies.
+
+* **Zero dependencies**: The core of the platform is a single .NET assembly, `Microsoft.Testing.Platform.dll`, which has no dependencies other than the supported runtimes.
+
+* **Hostable**: The test runtime can be hosted in any .NET application. While a console application is commonly used to run tests, you can create a test application in any type of .NET application. This allows you to run tests within special contexts, such as devices or browsers, where there may be limitations.
+
+* **Support all .NET form factors**: Support current and future .NET form factors, including Native AOT.
+
+* **Performant**: Finding the right balance between features and extension points to avoid bloating the runtime with non-fundamental code. The new test platform is designed to "orchestrate" a test run, rather than providing implementation details on how to do it.
+
+* **Extensible enough**: The new platform is built on extensibility points to allow for maximum customization of runtime execution. It allows you to configure the test process host, observe the test process, and consume information from the test framework within the test host process.
+
+* **Single module deploy**: The hostability feature enables a single module deploy model, where a single compilation result can be used to support all extensibility points, both out-of-process and in-process, without the need to ship different executable modules.
+
 ## Supported test frameworks
 
 * MSTest. In MSTest, the support of `Microsoft.Testing.Platform` is done via [MSTest runner](unit-testing-mstest-runner-intro.md).
-* NUnit: work in progress, for more information, see [Microsoft Testing Platform for NUnit](https://github.com/nunit/nunit3-vs-adapter/issues/1152).
-* xUnit: work in progress, for more information, see [Microsoft Testing Platform for xUnit](https://github.com/xunit/visualstudio.xunit/issues/402).
+* NUnit. In NUnit, the support of `Microsoft.Testing.Platform` is done via [NUnit runner](unit-testing-nunit-runner-intro.md).
+* xUnit.net: In xUnit.net, the support of `Microsoft.Testing.Platform` is done via [xUnit.net runner](https://xunit.net/docs/getting-started/v3/microsoft-testing-platform).
+* TUnit: entirely constructed on top of the `Microsoft.Testing.Platform`, for more information, see [TUnit documentation](https://thomhurst.github.io/TUnit/)
 
 ## Run and debug tests
 
@@ -208,6 +233,18 @@ Specifies the minimum number of tests that are expected to run. By default, at l
 - **`--results-directory`**
 
 The directory where the test results are going to be placed. If the specified directory doesn't exist, it's created. The default is `TestResults` in the directory that contains the test application.
+
+## MSBuild integration
+
+The NuGet package [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) provides various integrations for `Microsoft.Testing.Platform` with MSBuild:
+
+- Support for `dotnet test`. For more information, see [dotnet test integration](./unit-testing-platform-integration-dotnet-test.md).
+- Support for `ProjectCapability` required by `Visual Studio` and `Visual Studio Code` Test Explorers.
+- Automatic generation of the entry point (`Main` method).
+- Automatic generation of the configuration file.
+
+> [!NOTE]
+> This integration works in a transitive way (a project that references another project referencing this package will behave as if it references the package) and can be disabled through the `IsTestingPlatformApplication` MSBuild property.
 
 ## See also
 

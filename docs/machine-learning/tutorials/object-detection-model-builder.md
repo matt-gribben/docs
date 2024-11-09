@@ -45,7 +45,7 @@ Some use cases for object detection include:
 - Object Counting
 - Activity Recognition
 
-This sample creates a C# console application that detects stop signs in images using a machine learning model built with Model Builder. You can find the source code for this tutorial at the [dotnet/machinelearning-samples](https://github.com/dotnet/machinelearning-samples/tree/main/samples/modelbuilder/ObjectDetection_StopSigns) GitHub repository.
+This sample creates a C# console application that detects stop signs in images using a machine learning model built with Model Builder. You can find the source code for this tutorial at the [samples browser](/samples/dotnet/machinelearning-samples/mlnet-object-detection-model-builder/).
 
 ## Prepare and understand the data
 
@@ -276,7 +276,7 @@ When you add a web API to your solution, you're prompted to name the project.
    > 1. Multiply the top and bottom coordinates by the original image height, and multiply the left and right coordinates by the original image width.
    > 1. Divide the top and bottom coordinates by 600, and divide the left and right coordinates by 800.
    >
-   >    For example, given the original image dimensions,`actualImageHeight` and `actualImageWidth`, and a `ModelOutput` called `prediction`, the following code snippet shows how to scale the `BoundingBox` coordinates:
+   >    For example, given the original image dimensions, `actualImageHeight` and `actualImageWidth`, and a `ModelOutput` called `prediction`, the following code snippet shows how to scale the `BoundingBox` coordinates:
    >
    >    ```csharp
    >    var top = originalImageHeight * prediction.Top / 600;
@@ -288,7 +288,7 @@ When you add a web API to your solution, you're prompted to name the project.
    > An image can have more than one bounding box, so the same process needs to be applied to each of the bounding boxes in the image.
 <!-- markdownlint-enable MD027 -->
 
-Congratulations! You've successfully built a machine learning model to detect stop signs in images using Model Builder. You can find the source code for this tutorial at the [dotnet/machinelearning-samples](https://github.com/dotnet/machinelearning-samples/tree/main/samples/modelbuilder/ObjectDetection_StopSigns) GitHub repository.
+Congratulations! You've successfully built a machine learning model to detect stop signs in images using Model Builder. You can find the source code for this tutorial at the [samples browser](/samples/dotnet/machinelearning-samples/mlnet-object-detection-model-builder/).
 
 ## Additional resources
 

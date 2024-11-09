@@ -32,7 +32,6 @@ f1_keywords:
   - "CS8332"
   - "CS8337"
   - "CS8338"
-  - "CS8345"
   - "CS8351"
   - "CS8373"
   - "CS8374"
@@ -67,6 +66,7 @@ f1_keywords:
   - "CS9199"
   - "CS9200"
   - "CS9201"
+  - "CS9265"
 helpviewer_keywords:
   - "CS0192"
   - "CS0199"
@@ -98,7 +98,6 @@ helpviewer_keywords:
   - "CS8332"
   - "CS8337"
   - "CS8338"
-  - "CS8345"
   - "CS8351"
   - "CS8373"
   - "CS8374"
@@ -133,7 +132,8 @@ helpviewer_keywords:
   - "CS9199"
   - "CS9200"
   - "CS9201"
-ms.date: 11/02/2023
+  - "CS9265"
+ms.date: 11/06/2024
 ---
 # Errors and warnings associated with reference parameters, variables, and returns
 
@@ -172,7 +172,6 @@ That's by design. The text closely matches the text of the compiler error / warn
 - [**CS8332**](#writable-reference-variables-require-a-writable-referent): *Cannot assign to a member of variable or use it as the right hand side of a `ref` assignment because it is a readonly variable*
 - [**CS8337**](#reference-variable-restrictions): *The first parameter of a '`ref`' extension method must be a value type or a generic type constrained to struct.*
 - [**CS8338**](#reference-variable-restrictions): *The first '`in`' or '`ref readonly`' parameter of the extension method must be a concrete (non-generic) value type.*
-- [**CS8345**](#ref-safety-violations): *Field or auto-implemented property cannot be of type unless it is an instance member of a `ref struct`.*
 - [**CS8351**](#ref-safety-violations): *Branches of a `ref` conditional operator cannot refer to variables with incompatible declaration scopes*
 - [**CS8373**](#incorrect-syntax): *The left-hand side of a `ref` assignment must be a ref variable.*
 - [**CS8374**](#ref-safety-violations): *Cannot ref-assign source has a narrower escape scope than destination.*
@@ -183,9 +182,9 @@ That's by design. The text closely matches the text of the compiler error / warn
 - [**CS9078**](#ref-safety-violations): *Cannot return by reference a member of parameter through a `ref` parameter; it can only be returned in a return statement*
 - [**CS9079**](#ref-safety-violations): *Cannot ref-assign because source can only escape the current method through a return statement.*
 - [**CS9096**](#ref-safety-violations): *Cannot ref-assign because source has a wider value escape scope than destination allowing assignment through source of values with narrower escapes scopes than destination.*
-- [**CS9101**](#unscoped-ref-restrictions): *UnscopedRefAttribute can only be applied to struct instance methods and properties, and cannot be applied to constructors or init-only members.*
-- [**CS9102**](#unscoped-ref-restrictions): *UnscopedRefAttribute cannot be applied to an interface implementation.*
-- [**CS9104**](#reference-variable-restrictions): *A using statement resource of type cannot be used in async methods or async lambda expressions.*
+- [**CS9101**](#unscoped-ref-restrictions): *UnscopedRefAttribute can only be applied to struct or virtual interface instance methods and properties, and cannot be applied to constructors or init-only members.*
+- [**CS9102**](#unscoped-ref-restrictions): *UnscopedRefAttribute cannot be applied to an interface implementation  because implemented member doesn't have this attribute.*
+- [**CS9104**](#reference-variable-restrictions): *A `using` statement resource of type cannot be used in async methods or async lambda expressions.*
 - [**CS9190**](#incorrect-syntax): *`readonly` modifier must be specified after `ref`.*
 - [**CS9199**](#reference-variable-restrictions): *A `ref readonly` parameter cannot have the Out attribute.*
 
@@ -210,6 +209,7 @@ The following warnings are generated when reference variables are used incorrect
 - [**CS9198**](#reference-variable-restrictions): *Reference kind modifier of parameter doesn't match the corresponding parameter in target.*
 - [**CS9200**](#reference-variable-restrictions): *A default value is specified for `ref readonly` parameter, but `ref readonly` should be used only for references. Consider declaring the parameter as `in`.*
 - [**CS9201**](#reference-variable-restrictions): *Ref field should be ref-assigned before use.*
+- [**CS9265**](#reference-variable-restrictions): *Field is never ref-assigned to, and will always have its default value (null reference)*
 
 These errors and warnings follow these themes:
 
@@ -264,6 +264,7 @@ The following warnings indicate that a reference variable shouldn't be used, and
 - **CS9198**:  *Reference kind modifier of parameter doesn't match the corresponding parameter in target.*
 - **CS9200**:  *A default value is specified for `ref readonly` parameter, but `ref readonly` should be used only for references. Consider declaring the parameter as `in`.*
 - **CS9201**:  *Ref field should be ref-assigned before use.*
+- **CS9265**: *Field is never ref-assigned to, and will always have its default value (null reference)*
 
 To fix the error, remove the reference variable where it isn't allowed:
 
@@ -280,13 +281,14 @@ To fix the error, remove the reference variable where it isn't allowed:
 - Methods attributed with <xref:System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute?displayProperty=nameWithType> can't use reference parameters.
 - A Windows runtime event can't be passed as a reference variable.
 - A `ref readonly` parameter can't have the <xref:System.Runtime.InteropServices.OutAttribute?displayProperty=nameWithType> applied to it in remoting API.
+- Initialize a `ref` field in the constructor or as a field initializer.
 
 ## `unscoped ref` restrictions
 
 The `unscoped` qualifier on `ref` parameters isn't allowed in some locations:
 
-- **CS9101**:  *UnscopedRefAttribute can only be applied to struct instance methods and properties, and cannot be applied to constructors or  or init-only members.*
-- **CS9102**:  *UnscopedRefAttribute cannot be applied to an interface implementation.*
+- **CS9101**:  *UnscopedRefAttribute can only be applied to struct instance or virtual interface methods and properties, and cannot be applied to constructors or  or init-only members.*
+- **CS9102**:  *UnscopedRefAttribute cannot be applied to an interface implementation because implemented member doesn't have this attribute..*
 
 You must remove the `unscoped` modifier on the parameter declaration that caused the error.
 

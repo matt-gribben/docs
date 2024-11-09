@@ -1,5 +1,5 @@
 ---
-title: "Structure types - C# reference"
+title: "Structure types"
 description: Learn about the struct type in C#
 ms.date: 04/05/2023
 f1_keywords:
@@ -28,7 +28,7 @@ Because structure types have value semantics, we recommend you define *immutable
 You use the `readonly` modifier to declare that a structure type is immutable. All data members of a `readonly` struct must be read-only as follows:
 
 - Any field declaration must have the [`readonly` modifier](../keywords/readonly.md)
-- Any property, including auto-implemented ones, must be read-only or [`init` only](../keywords/init.md).
+- Any property, including automatically implemented ones, must be read-only or [`init` only](../keywords/init.md). Note that init-only setters are only available from [C# version 9 onwards](../../whats-new/csharp-version-history.md).
 
 That guarantees that no member of a `readonly` struct modifies the state of the struct. That means that other instance members except constructors are implicitly [`readonly`](#readonly-instance-members).
 
@@ -62,7 +62,7 @@ Typically, you apply the `readonly` modifier to the following kinds of instance 
   If you need to apply the `readonly` modifier to both accessors of a property or indexer, apply it in the declaration of the property or indexer.
 
   > [!NOTE]
-  > The compiler declares a `get` accessor of an [auto-implemented property](../../programming-guide/classes-and-structs/auto-implemented-properties.md) as `readonly`, regardless of presence of the `readonly` modifier in a property declaration.
+  > The compiler declares a `get` accessor of an [automatically implemented property](../../programming-guide/classes-and-structs/auto-implemented-properties.md) as `readonly`, regardless of presence of the `readonly` modifier in a property declaration.
 
   You may apply the `readonly` modifier to a property or indexer with an `init` accessor:
 
@@ -100,7 +100,15 @@ In addition, the compiler validates the <xref:System.Runtime.CompilerServices.In
 
 In most cases, an inline array can be accessed like an array, both to read and write values. In addition, you can use the [range](../operators/member-access-operators.md#range-operator-) and [index](../operators/member-access-operators.md#indexer-access) operators.
 
-There are minimal restrictions on the type of the single field. It can't be a pointer type, but it can be any reference type, or any value type. You can use inline arrays with almost any C# data structure.
+There are minimal restrictions on the type of the single field of an inline array. It can't be a pointer type:
+
+:::code language="csharp" source="snippets/shared/StructType.cs" id="DeclareInlineArrayWithPointer":::
+
+but it can be any reference type, or any value type:
+
+:::code language="csharp" source="snippets/shared/StructType.cs" id="DeclareInlineArrayWithReferenceType":::
+
+You can use inline arrays with almost any C# data structure.
 
 Inline arrays are an advanced language feature. They're intended for high-performance scenarios where an inline, contiguous block of elements is faster than other alternative data structures. You can learn more about inline arrays from the [feature speclet](~/_csharplang/proposals/csharp-12.0/inline-arrays.md)
 
@@ -176,3 +184,4 @@ For more information about `struct` features, see the following feature proposal
 - [The C# type system](../../fundamentals/types/index.md)
 - [Design guidelines - Choosing between class and struct](../../../standard/design-guidelines/choosing-between-class-and-struct.md)
 - [Design guidelines - Struct design](../../../standard/design-guidelines/struct.md)
+- [Resolve errors and warnings with inline array declarations](../../language-reference/compiler-messages/inline-array-errors.md)

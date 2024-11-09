@@ -22,6 +22,7 @@ ms.author: enjieid
 | **Enabled by default**              | Yes                                          |
 | **Default severity**                | Info                                         |
 | **Introduced in version**           | 3.3.0                                        |
+| **There is a code fix**             | No                                           |
 
 ## Cause
 
@@ -29,11 +30,11 @@ A test class should have a test method.
 
 ## Rule description
 
-A test class should have at least one test method or be `static` and have methods that are attributed with `[AssemblyInitialization]` or `[AssemblyCleanup]`.
+A test class should have at least one test method or be `static` and have methods that are attributed with `[AssemblyInitialize]` or `[AssemblyCleanup]`.
 
 ## How to fix violations
 
-Ensure that the test class has a test method or is `static` and has methods attributed with `[AssemblyInitialization]` or `[AssemblyCleanup]`.
+Ensure that the test class has a test method or is `static` and has methods attributed with `[AssemblyInitialize]` or `[AssemblyCleanup]`.
 
 ## When to suppress warnings
 

@@ -20,7 +20,7 @@ author: gewarren
 
 *Preview* features are disabled by default. They are also not supported for use in production and may be removed in a future version. The new <xref:System.Runtime.Versioning.RequiresPreviewFeaturesAttribute> is used to annotate preview APIs, and a corresponding analyzer alerts you if you're using these preview APIs.
 
-.NET 6 is supported by Visual Studio 2022 and Visual Studio 2022 for Mac (and later versions).
+.NET 6 is supported by Visual Studio 2022 and later versions.
 
 This article does not cover all of the new features of .NET 6. To see all of the new features, and for further information about the features listed in this article, see the [Announcing .NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6) blog post.
 
@@ -94,7 +94,7 @@ Many improvements have been made in <xref:System.Text.Json?displayProperty=fullN
 
 ### Source generator
 
-.NET 6 adds a new [source generator](../../csharp/roslyn-sdk/source-generators-overview.md) for <xref:System.Text.Json?displayProperty=fullName>. Source generation works with <xref:System.Text.Json.JsonSerializer> and can be configured in multiple ways. It can improve performance, reduce memory usage, and facilitate assembly trimming. For more information, see [How to choose reflection or source generation in System.Text.Json](../../standard/serialization/system-text-json/source-generation-modes.md) and [How to use source generation in System.Text.Json](../../standard/serialization/system-text-json/source-generation.md).
+.NET 6 adds a new [source generator](../../csharp/roslyn-sdk/index.md#source-generators) for <xref:System.Text.Json?displayProperty=fullName>. Source generation works with <xref:System.Text.Json.JsonSerializer> and can be configured in multiple ways. It can improve performance, reduce memory usage, and facilitate assembly trimming. For more information, see [How to choose reflection or source generation in System.Text.Json](../../standard/serialization/system-text-json/source-generation-modes.md) and [How to use source generation in System.Text.Json](../../standard/serialization/system-text-json/source-generation.md).
 
 ### Writeable DOM
 

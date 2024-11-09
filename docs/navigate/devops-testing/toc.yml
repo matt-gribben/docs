@@ -57,22 +57,42 @@ items:
             href: ../../core/testing/unit-testing-fsharp-with-nunit.md
           - name: VB unit testing
             href: ../../core/testing/unit-testing-visual-basic-with-nunit.md
+          - name: NUnit runner
+            href: ../../core/testing/unit-testing-nunit-runner-intro.md
       - name: MSTest
         items:
           - name: Overview
             href: ../../core/testing/unit-testing-mstest-intro.md
-          - name: C# unit testing
-            href: ../../core/testing/unit-testing-with-mstest.md
-          - name: F# unit testing
-            href: ../../core/testing/unit-testing-fsharp-with-mstest.md
-          - name: VB unit testing
-            href: ../../core/testing/unit-testing-visual-basic-with-mstest.md
-          - name: MSTest SDK
-            href: ../../core/testing/unit-testing-mstest-sdk.md
-          - name: MSTest runner
-            href: ../../core/testing/unit-testing-mstest-runner-intro.md
-          - name: Configure MSTest
-            href: ../../core/testing/unit-testing-mstest-configure.md
+          - name: Getting started
+            items:
+              - name: Overview
+                href: ../../core/testing/unit-testing-mstest-getting-started.md
+              - name: MSTest SDK
+                href: ../../core/testing/unit-testing-mstest-sdk.md
+          - name: Writing tests
+            items:
+              - name: Overview
+                href: ../../core/testing/unit-testing-mstest-writing-tests.md
+              - name: Examples
+                items:
+                - name: C# example
+                  href: ../../core/testing/unit-testing-with-mstest.md
+                - name: F# example
+                  href: ../../core/testing/unit-testing-fsharp-with-mstest.md
+                - name: VB example
+                  href: ../../core/testing/unit-testing-visual-basic-with-mstest.md
+              - name: Attributes
+                href: ../../core/testing/unit-testing-mstest-writing-tests-attributes.md
+              - name: Assertions
+                href: ../../core/testing/unit-testing-mstest-writing-tests-assertions.md
+          - name: Running tests
+            items:
+              - name: Overview
+                href: ../../core/testing/unit-testing-mstest-running-tests.md
+              - name: MSTest runner
+                href: ../../core/testing/unit-testing-mstest-runner-intro.md
+              - name: Configure MSTest
+                href: ../../core/testing/unit-testing-mstest-configure.md
           - name: Code analysis
             items:
               - name: Overview
@@ -97,6 +117,12 @@ items:
                     href: ../../core/testing/mstest-analyzers/mstest0021.md
                   - name: MSTEST0022
                     href: ../../core/testing/mstest-analyzers/mstest0022.md
+                  - name: MSTEST0025
+                    href: ../../core/testing/mstest-analyzers/mstest0025.md
+                  - name: MSTEST0029
+                    href: ../../core/testing/mstest-analyzers/mstest0029.md
+                  - name: MSTEST0036
+                    href: ../../core/testing/mstest-analyzers/mstest0036.md
               - name: Performance
                 items:
                   - name: Overview
@@ -131,16 +157,34 @@ items:
                     href: ../../core/testing/mstest-analyzers/mstest0014.md
                   - name: MSTEST0017
                     href: ../../core/testing/mstest-analyzers/mstest0017.md
+                  - name: MSTEST0018
+                    href: ../../core/testing/mstest-analyzers/mstest0018.md
                   - name: MSTEST0023
                     href: ../../core/testing/mstest-analyzers/mstest0023.md
                   - name: MSTEST0024
                     href: ../../core/testing/mstest-analyzers/mstest0024.md
+                  - name: MSTEST0026
+                    href: ../../core/testing/mstest-analyzers/mstest0026.md
+                  - name: MSTEST0030
+                    href: ../../core/testing/mstest-analyzers/mstest0030.md
+                  - name: MSTEST0031
+                    href: ../../core/testing/mstest-analyzers/mstest0031.md
+                  - name: MSTEST0032
+                    href: ../../core/testing/mstest-analyzers/mstest0032.md
+                  - name: MSTEST0034
+                    href: ../../core/testing/mstest-analyzers/mstest0034.md
+                  - name: MSTEST0035
+                    href: ../../core/testing/mstest-analyzers/mstest0035.md
       - name: Microsoft Testing Platform
         items:
           - name: Overview
             href: ../../core/testing/unit-testing-platform-intro.md
+          - name: FAQ
+            href: ../../core/testing/unit-testing-platform-faq.md
           - name: Comparison with VSTest
             href: ../../core/testing/unit-testing-platform-vs-vstest.md
+          - name: Configure the test platform
+            href: ../../core/testing/unit-testing-platform-config.md
           - name: Extensions
             items:
               - name: Overview
@@ -149,20 +193,36 @@ items:
                 href: ../../core/testing/unit-testing-platform-extensions-code-coverage.md
               - name: Diagnostics
                 href: ../../core/testing/unit-testing-platform-extensions-diagnostics.md
+              - name: Fakes
+                href: ../../core/testing/unit-testing-platform-extensions-fakes.md
               - name: Hosting
                 href: ../../core/testing/unit-testing-platform-extensions-hosting.md
+              - name: Output
+                href: ../../core/testing/unit-testing-platform-extensions-output.md
               - name: Policy
                 href: ../../core/testing/unit-testing-platform-extensions-policy.md
               - name: Test Reports
                 href: ../../core/testing/unit-testing-platform-extensions-test-reports.md
               - name: VSTest Bridge
                 href: ../../core/testing/unit-testing-platform-extensions-vstest-bridge.md
+          - name: Diagnostics overview
+            href: ../../core/testing/unit-testing-platform-diagnostics.md
           - name: Optional telemetry
             href: ../../core/testing/unit-testing-platform-telemetry.md
           - name: Known exit codes
             href: ../../core/testing/unit-testing-platform-exit-codes.md
           - name: Integration with dotnet test
             href: ../../core/testing/unit-testing-platform-integration-dotnet-test.md
+          - name: Testing platform Architecture
+            items:
+              - name: Overview
+                href: ../../core/testing/unit-testing-platform-architecture.md
+              - name: Capabilities
+                href: ../../core/testing/unit-testing-platform-architecture-capabilities.md
+              - name: Extensions
+                href: ../../core/testing/unit-testing-platform-architecture-extensions.md
+              - name: Services
+                href: ../../core/testing/unit-testing-platform-architecture-services.md
       - name: Run selective unit tests
         href: ../../core/testing/selective-unit-tests.md
       - name: Order unit tests
@@ -201,6 +261,8 @@ items:
             href: ../../core/deploying/trimming/trimming-options.md
           - name: Trimming libraries
             href: ../../core/deploying/trimming/prepare-libraries-for-trimming.md
+          - name: Intrinsic APIs marked RequiresUnreferencedCode
+            href: ../../core/deploying/trimming/intrinsic-requiresunreferencedcode-apis.md
           - name: Trim warnings
             items:
               - name: IL2001
@@ -335,6 +397,8 @@ items:
                 href: ../../core/deploying/trimming/trim-warnings/il2069.md
               - name: IL2070
                 href: ../../core/deploying/trimming/trim-warnings/il2070.md
+              - name: IL2071
+                href: ../../core/deploying/trimming/trim-warnings/il2071.md
               - name: IL2072
                 href: ../../core/deploying/trimming/trim-warnings/il2072.md
               - name: IL2073
@@ -343,6 +407,8 @@ items:
                 href: ../../core/deploying/trimming/trim-warnings/il2074.md
               - name: IL2075
                 href: ../../core/deploying/trimming/trim-warnings/il2075.md
+              - name: IL2076
+                href: ../../core/deploying/trimming/trim-warnings/il2076.md
               - name: IL2077
                 href: ../../core/deploying/trimming/trim-warnings/il2077.md
               - name: IL2078
@@ -351,6 +417,8 @@ items:
                 href: ../../core/deploying/trimming/trim-warnings/il2079.md
               - name: IL2080
                 href: ../../core/deploying/trimming/trim-warnings/il2080.md
+              - name: IL2081
+                href: ../../core/deploying/trimming/trim-warnings/il2081.md
               - name: IL2082
                 href: ../../core/deploying/trimming/trim-warnings/il2082.md
               - name: IL2083
@@ -421,6 +489,8 @@ items:
                 href: ../../core/deploying/trimming/trim-warnings/il2116.md
               - name: IL2117
                 href: ../../core/deploying/trimming/trim-warnings/il2117.md
+              - name: IL2122
+                href: ../../core/deploying/trimming/trim-warnings/il2122.md
       - name: Native AOT deployment model
         items:
           - name: Overview
@@ -431,10 +501,16 @@ items:
             href: ../../core/deploying/native-aot/diagnostics.md
           - name: Native code interop
             href: ../../core/deploying/native-aot/interop.md
+          - name: Build native libraries
+            href: ../../core/deploying/native-aot/libraries.md
           - name: Cross-compilation
             href: ../../core/deploying/native-aot/cross-compile.md
+          - name: Security
+            href: ../../core/deploying/native-aot/security.md
           - name: Intro to AOT warnings
             href: ../../core/deploying/native-aot/fixing-warnings.md
+          - name: Intrinsic APIs marked RequiresDynamicCode
+            href: ../../core/deploying/native-aot/intrinsic-requiresdynamiccode-apis.md
           - name: AOT warnings
             items:
               - name: IL3050

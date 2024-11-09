@@ -1,5 +1,5 @@
 ---
-title: How to articles (C# Guide)
+title: How to articles 
 description: A collection of quick tips and short, focused code samples
 ms.topic: conceptual
 ms.date: 12/20/2017
@@ -22,7 +22,7 @@ There are several tips and tricks that are common C# developer practices:
 
 You create classes, records, and structs to implement your program. These techniques are commonly used when writing classes, records, or structs.
 
-- [Declare auto implemented properties](../programming-guide/classes-and-structs/how-to-implement-a-lightweight-class-with-auto-implemented-properties.md).
+- [Declare automatically implemented properties](../programming-guide/classes-and-structs/how-to-implement-a-lightweight-class-with-auto-implemented-properties.md).
 - [Declare and use read/write properties](../programming-guide/classes-and-structs/how-to-declare-and-use-read-write-properties.md).
 - [Define constants](../programming-guide/classes-and-structs/how-to-define-constants.md).
 - [Override the `ToString` method to provide string output](../programming-guide/classes-and-structs/how-to-override-the-tostring-method.md).
@@ -92,7 +92,7 @@ Events provide a mechanism to publish or subscribe to notifications.
 
 - [Subscribe and unsubscribe from events](../programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events.md).
 - [Implement events declared in interfaces](../programming-guide/events/how-to-implement-interface-events.md).
-- [Conform to .NET guidelines when your code publishes events](../programming-guide/events/how-to-publish-events-that-conform-to-net-framework-guidelines.md).
+- [Conform to .NET guidelines when your code publishes events](/dotnet/standard/events).
 - [Raise events defined in base classes from derived classes](../programming-guide/events/how-to-raise-base-class-events-in-derived-classes.md).
 - [Implement custom event accessors](../programming-guide/events/how-to-implement-custom-event-accessors.md).
 

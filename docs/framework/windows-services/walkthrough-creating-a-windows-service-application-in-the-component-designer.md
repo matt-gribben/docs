@@ -64,7 +64,7 @@ In this section, you add a custom event log to the Windows service. The <xref:Sy
    [!code-csharp[VbRadconService#2](./snippets/MyNewService/csharp/MyNewService.cs#2)]
    [!code-vb[VbRadconService#2](../../../samples/snippets/visualbasic/VS_Snippets_VBCSharp/VbRadconService/VB/MyNewService.vb#2)]
 
-1. Add a `using` statement to **MyNewService.cs** (if it doesn't already exist), or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Diagnostics?displayProperty=nameWithType> namespace:
+1. Add a `using` directive to **MyNewService.cs** (if it doesn't already exist), or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Diagnostics?displayProperty=nameWithType> namespace:
 
     ```csharp
     using System.Diagnostics;
@@ -94,7 +94,7 @@ To set up a simple polling mechanism, use the <xref:System.Timers.Timer?displayP
 
 ##### Set up the polling mechanism
 
-1. Add a `using` statement to **MyNewService.cs**, or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Timers?displayProperty=nameWithType> namespace:
+1. Add a `using` directive to **MyNewService.cs**, or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Timers?displayProperty=nameWithType> namespace:
 
    ```csharp
    using System.Timers;
@@ -140,7 +140,7 @@ To set up a simple polling mechanism, use the <xref:System.Timers.Timer?displayP
    public void OnTimer(object sender, ElapsedEventArgs args)
    {
        // TODO: Insert monitoring activities here.
-       eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+       _eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
    }
    ```
 
@@ -176,7 +176,7 @@ Services report their status to the [Service Control Manager](/windows/desktop/S
 
 You can implement the `SERVICE_START_PENDING` and `SERVICE_STOP_PENDING` status settings by adding code that calls the Windows [SetServiceStatus](/windows/desktop/api/winsvc/nf-winsvc-setservicestatus) function.
 
-1. Add a `using` statement to **MyNewService.cs**, or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Runtime.InteropServices?displayProperty=nameWithType> namespace:
+1. Add a `using` directive to **MyNewService.cs**, or an `Imports` statement to **MyNewService.vb**, for the <xref:System.Runtime.InteropServices?displayProperty=nameWithType> namespace:
 
     ```csharp
     using System.Runtime.InteropServices;
@@ -388,8 +388,8 @@ Each Windows service has a registry entry under the **HKEY_LOCAL_MACHINE\SYSTEM\
 
 1. Select **Program.cs**, or **MyNewService.Designer.vb**, then choose **View Code** from the shortcut menu. In the `Main` method, change the code to add an input parameter and pass it to the service constructor:
 
-   [!code-csharp[VbRadconService](./snippets/MyNewService/csharp/Program-add-parameter.cs#1?highlight=6,11)]
-   [!code-vb[VbRadconService](../../../samples/snippets/visualbasic/VS_Snippets_VBCSharp/VbRadconService/VB/MyNewService.Designer-add-parameter.vb?highlight=1-2)]
+   [!code-csharp[VbRadconService](./snippets/MyNewService/csharp/Program-add-parameter.cs#1)]
+   [!code-vb[VbRadconService](../../../samples/snippets/visualbasic/VS_Snippets_VBCSharp/VbRadconService/VB/MyNewService.Designer-add-parameter.vb)]
 
 1. To specify the command-line arguments, add the following code to the `ProjectInstaller` class in **ProjectInstaller.cs**, or **ProjectInstaller.vb**:
 

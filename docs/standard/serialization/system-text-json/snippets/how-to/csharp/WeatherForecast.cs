@@ -111,7 +111,7 @@ namespace SystemTextJsonSamples
     // </WFWithConverterAttribute>
 
     // <WFWithPropertyNameAttribute>
-    public class WeatherForecastWithPropertyNameAttribute
+    public class WeatherForecastWithPropertyName
     {
         public DateTimeOffset Date { get; set; }
         public int TemperatureCelsius { get; set; }
@@ -223,6 +223,24 @@ namespace SystemTextJsonSamples
         Cold, Cool, Warm, Hot
     }
     // </WFWithEnum>
+
+    // <WFWithEnumCustomName>
+    public class WeatherForecastWithEnumCustomName
+    {
+        public DateTimeOffset Date { get; set; }
+        public int TemperatureCelsius { get; set; }
+        public CloudCover? Sky { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum CloudCover
+    {
+        Clear,
+        [JsonStringEnumMemberName("Partly cloudy")]
+        Partial,
+        Overcast
+    }
+    // </WFWithEnumCustomName>
 
     // <WFWithConverterEnum>
     public class WeatherForecastWithPrecipEnum
@@ -349,6 +367,17 @@ namespace SystemTextJsonSamples
             return weatherForecast;
         }
 
+        public static WeatherForecastWithEnumCustomName CreateWeatherForecastWithEnumCustomName()
+        {
+            var weatherForecast = new WeatherForecastWithEnumCustomName
+            {
+                Date = DateTime.Parse("2019-08-01"),
+                TemperatureCelsius = 25,
+                Sky = CloudCover.Partial
+            };
+            return weatherForecast;
+        }
+
         public static WeatherForecastWithPrecipEnum CreateWeatherForecastWithPrecipEnum()
         {
             var weatherForecast = new WeatherForecastWithPrecipEnum
@@ -360,9 +389,9 @@ namespace SystemTextJsonSamples
             return weatherForecast;
         }
 
-        public static WeatherForecastWithPropertyNameAttribute CreateWeatherForecastWithPropertyNameAttribute()
+        public static WeatherForecastWithPropertyName CreateWeatherForecastWithPropertyName()
         {
-            var weatherForecast = new WeatherForecastWithPropertyNameAttribute
+            var weatherForecast = new WeatherForecastWithPropertyName
             {
                 Date = DateTime.Parse("2019-08-01"),
                 TemperatureCelsius = 25,

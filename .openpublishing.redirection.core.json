@@ -9,6 +9,10 @@
             "redirect_url": "/dotnet/core/deploying/index"
         },
         {
+            "source_path_from_root": "/docs/core/additional-tools/uninstall-tool.md",
+            "redirect_url": "/dotnet/core/additional-tools/uninstall-tool-overview"
+        },
+        {
             "source_path_from_root": "/docs/core/build/distribution-packaging.md",
             "redirect_url": "/dotnet/core/distribution-packaging",
             "redirect_document_id": true
@@ -333,10 +337,6 @@
             "source_path_from_root": "/docs/core/compatibility/windows-forms/5.0/sdk-and-target-framework-change.md",
             "redirect_url": "/dotnet/core/compatibility/sdk/5.0/sdk-and-target-framework-change",
             "redirect_document_id": true
-        },
-        {
-            "source_path_from_root": "/docs/core/compatibility/wpf.md",
-            "redirect_url": "/dotnet/core/compatibility/sdk/5.0/automatically-infer-winexe-output-type"
         },
         {
             "source_path_from_root": "/docs/core/deploying/applications.md",
@@ -702,12 +702,16 @@
             "redirect_url": "/dotnet/core/install/windows"
         },
         {
+            "source_path_from_root": "/docs/core/install/linux-centos.md",
+            "redirect_url": "/dotnet/core/install/linux-rhel#where-is-centos-linux"
+        },
+        {
             "source_path_from_root": "/docs/core/install/linux-package-manager-centos7.md",
-            "redirect_url": "/dotnet/core/install/linux-centos"
+            "redirect_url": "/dotnet/core/install/linux-rhel#where-is-centos-linux"
         },
         {
             "source_path_from_root": "/docs/core/install/linux-package-manager-centos8.md",
-            "redirect_url": "/dotnet/core/install/linux-centos"
+            "redirect_url": "/dotnet/core/install/linux-rhel#where-is-centos-linux"
         },
         {
             "source_path_from_root": "/docs/core/install/linux-package-manager-debian10.md",
@@ -868,6 +872,14 @@
         {
             "source_path_from_root": "/docs/core/porting/upgrade-assistant-aspnetmvc.md",
             "redirect_url": "/aspnet/core/migration/mvc"
+        },
+        {
+            "source_path_from_root": "/docs/core/porting/upgrade-assistant-install-legacy.md",
+            "redirect_url": "/dotnet/core/porting/upgrade-assistant-wcf"
+        },
+        {
+            "source_path_from_root": "/docs/core/porting/upgrade-assistant-uwp-framework.md",
+            "redirect_url": "/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/upgrade-assistant"
         },
         {
             "source_path_from_root": "/docs/core/porting/upgrade-assistant-winforms-framework.md",
@@ -1229,11 +1241,11 @@
         },
         {
             "source_path_from_root": "/docs/core/tutorials/using-on-mac-vs-full-solution.md",
-            "redirect_url": "/dotnet/core/tutorials/library-with-visual-studio-mac"
+            "redirect_url": "/dotnet/core/tutorials/library-with-visual-studio-code"
         },
         {
             "source_path_from_root": "/docs/core/tutorials/using-on-mac-vs.md",
-            "redirect_url": "/dotnet/core/tutorials/with-visual-studio-mac"
+            "redirect_url": "/dotnet/core/tutorials/with-visual-studio-code"
         },
         {
             "source_path_from_root": "/docs/core/tutorials/using-on-macos.md",
@@ -1258,6 +1270,26 @@
         {
             "source_path_from_root": "/docs/core/tutorials/vb-with-visual-studio.md",
             "redirect_url": "/dotnet/core/tutorials/with-visual-studio"
+        },
+        {
+            "source_path_from_root": "/docs/core/tutorials/debugging-with-visual-studio-mac.md",
+            "redirect_url": "/dotnet/core/tutorials/debugging-with-visual-studio-code"
+        },
+        {
+            "source_path_from_root": "/docs/core/tutorials/library-with-visual-studio-mac.md",
+            "redirect_url": "/dotnet/core/tutorials/library-with-visual-studio-code"
+        },
+        {
+            "source_path_from_root": "/docs/core/tutorials/publishing-with-visual-studio-mac.md",
+            "redirect_url": "/dotnet/core/tutorials/publishing-with-visual-studio-code"
+        },
+        {
+            "source_path_from_root": "/docs/core/tutorials/testing-library-with-visual-studio-mac.md",
+            "redirect_url": "/dotnet/core/tutorials/testing-library-with-visual-studio-code"
+        },
+        {
+            "source_path_from_root": "/docs/core/tutorials/with-visual-studio-mac.md",
+            "redirect_url": "/dotnet/core/tutorials/with-visual-studio-code"
         },
         {
             "source_path_from_root": "/docs/core/versions/install-management.md",
@@ -1291,7 +1323,7 @@
         },
         {
             "source_path_from_root": "/docs/core/whats-new/index.md",
-            "redirect_url": "/dotnet/core/whats-new/dotnet-8/overview",
+            "redirect_url": "/dotnet/core/whats-new/dotnet-9/overview",
             "ms.custom": "updateeachrelease"
         },
         {
@@ -1317,10 +1349,6 @@
         {
             "source_path_from_root": "/docs/fundamentals/networking/tcp/tcp-overview.md",
             "redirect_url": "/dotnet/fundamentals/networking/sockets/tcp-classes"
-        },
-        {
-            "source_path_from_root": "/docs/core/porting/upgrade-assistant-uwp-framework.md",
-            "redirect_url": "/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/upgrade-assistant"
         }
     ]
 }

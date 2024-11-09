@@ -58,7 +58,7 @@ Jump to:
 |                    | Versions              |
 |--------------------|-----------------------|
 | **CLR**            | 4                     |
-| **Windows**        | ✔️ October 2023 Release (Version 22631)<br/> ✔️ September 2022 Release (Version 22621)<br/> ➕ 11 October 2021 Release (Version 22000)<br/>➕ 10 November 2021 Update<br/>➕ 10 May 2021 Update<br/>➕ 10 October 2020 Update<br/>|
+| **Windows**        | ✔️ 11 October 2023 Release (Version 22631)<br/>✔️ 11 September 2022 Release (Version 22621)<br/>➕ 11 October 2021 Release (Version 22000)<br/>➕ 10 2022 Update (22H2)<br/>➕ 10 November 2021 Update<br/>➕ 10 May 2021 Update<br/>➕ 10 October 2020 Update<br/>|
 | **Windows Server** | ➕ Windows Server 2022 |
 
 To determine the installed .NET version, use the following `Release` DWORD:
@@ -361,7 +361,7 @@ To determine the installed .NET version, use `Release` DWORD 378389. For more in
 
 > [!NOTE]
 >
-> - .NET Framework must be enabled on this operating system through [Control Panel (for Windows) or the Server Manager (for Windows Server)](../install/dotnet-35-windows.md#enable-the-net-framework-35-in-control-panel).
+> - .NET Framework must be enabled on this operating system through [Control Panel (for Windows) or the Server Manager (for Windows Server)](../install/dotnet-35-windows.md#enable-net-framework-35-in-control-panel).
 > - In general, you should not uninstall any versions of .NET Framework that are installed on your computer, because an application you use may depend on a specific version and may break if that version is removed. You can load multiple versions of .NET Framework on a single computer at the same time. This means that you can install .NET Framework without having to uninstall previous versions. For more information, see [Getting Started](../get-started/index.md).
 
 ## Remarks for version 4.5 and later

@@ -3,7 +3,7 @@ title: Logging in C#
 author: IEvangelist
 description: Learn about app logging provided by the Microsoft.Extensions.Logging NuGet package in C#.
 ms.author: dapine
-ms.date: 03/14/2024
+ms.date: 07/17/2024
 ---
 
 # Logging in C# and .NET
@@ -12,7 +12,12 @@ ms.date: 03/14/2024
 
 ## Get started
 
-This first example shows the basics, but it's only suitable for a trivial console app. In the next section you see how to improve the code considering scale, performance, configuration and typical programming patterns.
+This first example shows the basics, but it's only suitable for a trivial console app. This sample console app relies on the following NuGet packages:
+
+- [Microsoft.Extensions.Logging](https://www.nuget.org/packages/Microsoft.Extensions.Logging)
+- [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console)
+
+In the next section you see how to improve the code considering scale, performance, configuration and typical programming patterns.
 
 :::code language="csharp" source="snippets/logging/getting-started/Program.cs":::
 
@@ -359,7 +364,7 @@ public async Task<T> GetAsync<T>(string id)
 }
 ```
 
-In the preceding code, the first `Log{LogLevel}` parameter,`AppLogEvents.Read`, is the [Log event ID](#log-event-id). The second parameter is a message template with placeholders for argument values provided by the remaining method parameters. The method parameters are explained in the [message template](#log-message-template) section later in this article.
+In the preceding code, the first `Log{LogLevel}` parameter, `AppLogEvents.Read`, is the [Log event ID](#log-event-id). The second parameter is a message template with placeholders for argument values provided by the remaining method parameters. The method parameters are explained in the [message template](#log-message-template) section later in this article.
 
 Configure the appropriate log level and call the correct `Log{LogLevel}` methods to control how much log output is written to a particular storage medium. For example:
 
@@ -558,6 +563,7 @@ The following providers support scopes:
 
 - `Console`
 - [AzureAppServicesFile and AzureAppServicesBlob](xref:Microsoft.Extensions.Logging.AzureAppServices.BatchingLoggerOptions.IncludeScopes)
+- [ApplicationInsightsLoggerProvider](/azure/azure-monitor/app/ilogger?tabs=dotnet6#logging-scopes)
 
 Use a scope by wrapping logger calls in a `using` block:
 

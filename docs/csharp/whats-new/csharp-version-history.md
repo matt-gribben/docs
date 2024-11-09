@@ -1,5 +1,5 @@
 ---
-title: The history of C# - C# Guide
+title: The history of C#
 description: Learn how the C# language has changed over its many releases. Learn when different features were introduced in the language.
 author: erikdietrich
 ms.date: 03/06/2024
@@ -20,7 +20,7 @@ This article provides a history of each major release of the C# language. The C#
 The following features were added in C# 12:
 
 - [Primary constructors](./csharp-12.md#primary-constructors) - You can create primary constructors in any `class` or `struct` type.
-- [Collection expressions](./csharp-12.md#collection-expressions) - A new syntax to specify collection expressions, including the spread operator, (`..`), to expand any collection.
+- [Collection expressions](./csharp-12.md#collection-expressions) - A new syntax to specify collection expressions, including the spread element, (`..e`), to expand any collection.
 - [Inline arrays](./csharp-12.md#inline-arrays) - Inline arrays enable you to create an array of fixed size in a `struct` type.
 - [Optional parameters in lambda expressions](./csharp-12.md#default-lambda-parameters) - You can define default values for parameters on lambda expressions.
 - [`ref readonly` parameters](./csharp-12.md#ref-readonly-parameters) - `ref readonly` parameters enables more clarity for APIs that might be using `ref` parameters or `in` parameters.
@@ -161,7 +161,7 @@ Another set of features supports high-performance computing in C#:
 Another set of improvements supports scenarios where *code generators* add functionality:
 
 - [Module initializers](../language-reference/attributes/general.md#moduleinitializer-attribute) are methods that the runtime calls when an assembly loads.
-- [Partial methods](../language-reference/keywords/partial-method.md) support new accessibly modifiers and non-void return types. In those cases, an implementation must be provided.
+- [Partial methods](../language-reference/keywords/partial-member.md) support new accessibly modifiers and non-void return types. In those cases, an implementation must be provided.
 
 ### Fit and finish features
 
@@ -220,7 +220,7 @@ The following enhancements were made to existing features:
 
 - You can test `==` and `!=` with tuple types.
 - You can use expression variables in more locations.
-- You can attach attributes to the backing field of auto-implemented properties.
+- You can attach attributes to the backing field of automatically implemented properties.
 - Method resolution when arguments differ by `in` was improved.
 - Overload resolution now has fewer ambiguous cases.
 
@@ -303,7 +303,7 @@ Version 6.0, released with Visual Studio 2015, released many smaller features th
 
 - [Static imports](../language-reference/keywords/using-directive.md)
 - [Exception filters](../language-reference/keywords/when.md)
-- [Auto-property initializers](../properties.md)
+- [Auto-property initializers](../programming-guide/classes-and-structs/properties.md)
 - [Expression bodied members](../language-reference/operators/lambda-operator.md#expression-body-definition)
 - [Null propagator](../language-reference/operators/member-access-operators.md#null-conditional-operators--and-)
 - [String interpolation](../language-reference/tokens/interpolated.md)
@@ -363,7 +363,7 @@ C# version 3.0 came in late 2007, along with Visual Studio 2008, though the full
 - [Expression trees](/dotnet/csharp/advanced-topics/expression-trees)
 - [Extension methods](../programming-guide/classes-and-structs/extension-methods.md)
 - [Implicitly typed local variables](../language-reference/statements/declarations.md#implicitly-typed-local-variables)
-- [Partial methods](../language-reference/keywords/partial-method.md)
+- [Partial methods](../language-reference/keywords/partial-member.md)
 - [Object and collection initializers](../programming-guide/classes-and-structs/object-and-collection-initializers.md)
 
 In retrospect, many of these features seem both inevitable and inseparable. They all fit together strategically. This C# version's killer feature was the query expression, also known as Language-Integrated Query (LINQ).
@@ -418,7 +418,7 @@ The major features of C# 1.0 included:
 - [Structs](../language-reference/builtin-types/struct.md)
 - [Interfaces](../fundamentals/types/interfaces.md)
 - [Events](../events-overview.md)
-- [Properties](../properties.md)
+- [Properties](../programming-guide/classes-and-structs/properties.md)
 - [Delegates](../delegates-overview.md)
 - [Operators and expressions](../language-reference/operators/index.md)
 - [Statements](../programming-guide/statements-expressions-operators/statements.md)

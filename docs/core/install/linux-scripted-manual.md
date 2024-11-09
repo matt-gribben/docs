@@ -3,7 +3,7 @@ title: Install .NET on Linux without using a package manager
 description: Demonstrates how to install the .NET SDK and the .NET Runtime on Linux without a package manager. Use the install script or manually extract the binaries.
 author: adegeo
 ms.author: adegeo
-ms.date: 11/14/2023
+ms.date: 05/14/2024
 ms.custom: linux-related-content
 ---
 
@@ -21,14 +21,18 @@ The following table lists the support status of each version of .NET (and .NET C
 
 | ✔️ Supported | ❌ Unsupported |
 |-------------|---------------|
+| 9 (STS)     | 7             |
 | 8 (LTS)     | 5             |
-| 7 (STS)     | 3.1           |
-| 6 (LTS)     | 3.0           |
+| 6 (LTS)     | 3.1           |
+|             | 3.0           |
 |             | 2.2           |
 |             | 2.1           |
 |             | 2.0           |
 |             | 1.1           |
 |             | 1.0           |
+
+> [!IMPORTANT]
+> .NET 9 is currently in preview.
 
 ## Dependencies
 
@@ -36,7 +40,6 @@ It's possible that when you install .NET, specific dependencies may not be insta
 
 - [Alpine](linux-alpine.md#dependencies)
 - [Debian](linux-debian.md#dependencies)
-- [CentOS](linux-centos.md#dependencies)
 - [Fedora](linux-fedora.md#dependencies)
 - [RHEL and CentOS Stream](linux-rhel.md#dependencies)
 - [SLES](linux-sles.md#dependencies)
@@ -52,8 +55,6 @@ If your distribution wasn't previously listed, and is RPM-based, you may need th
 - libicu
 - openssl-libs
 
-If the target runtime environment's OpenSSL version is 1.1 or newer, install `compat-openssl10`.
-
 ### DEB dependencies
 
 If your distribution wasn't previously listed, and is debian-based, you may need the following dependencies:
@@ -61,8 +62,8 @@ If your distribution wasn't previously listed, and is debian-based, you may need
 - libc6
 - libgcc1
 - libgssapi-krb5-2
-- libicu67
-- libssl1.1
+- libicu70
+- libssl3
 - libstdc++6
 - zlib1g
 
@@ -113,6 +114,8 @@ For more information, see [dotnet-install scripts reference](../tools/dotnet-ins
 
 To enable .NET on the command line, see [Set environment variables system-wide](#set-environment-variables-system-wide).
 
+To learn how to use the .NET CLI, see [.NET CLI overview](../tools/index.md).
+
 ## Manual install
 
 <!-- Note, this content is copied in macos.md. Any fixes should be applied there too, though content may be different -->
@@ -122,7 +125,6 @@ As an alternative to the package managers, you can download and manually install
 Download a **binary** release for either the SDK or the runtime from one of the following sites. The .NET SDK includes the corresponding runtime:
 
 - ✔️ [.NET 8 downloads](https://dotnet.microsoft.com/download/dotnet/8.0)
-- ✔️ [.NET 7 downloads](https://dotnet.microsoft.com/download/dotnet/7.0)
 - ✔️ [.NET 6 downloads](https://dotnet.microsoft.com/download/dotnet/6.0)
 - [All .NET Core downloads](https://dotnet.microsoft.com/download/dotnet)
 
@@ -155,6 +157,8 @@ You can also install .NET to the home directory identified by the `HOME` variabl
 ```bash
 export DOTNET_ROOT=$HOME/.dotnet
 ```
+
+To learn how to use the .NET CLI, see [.NET CLI overview](../tools/index.md).
 
 ## Verify downloaded binaries
 
@@ -190,5 +194,6 @@ Set the following two environment variables in your shell profile:
 
 ## Next steps
 
+- [.NET CLI overview](../tools/index.md)
 - [How to enable TAB completion for the .NET CLI](../tools/enable-tab-autocomplete.md)
 - [Tutorial: Create a console application with .NET SDK using Visual Studio Code](../tutorials/with-visual-studio-code.md)

@@ -6,11 +6,11 @@ items:
   - name: Latest documentation updates
     expanded: true
     items:
-    - name: April 2024
+    - name: October 2024
       href: dotnet-docs-mod1.md
-    - name: March 2024
+    - name: September 2024
       href: dotnet-docs-mod0.md
-    - name: February 2024
+    - name: August 2024
       href: dotnet-docs-mod2.md
   - name: Product updates
     items:

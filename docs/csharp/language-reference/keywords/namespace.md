@@ -1,6 +1,6 @@
 ---
 description: "namespace keyword - C# Reference"
-title: "namespace keyword - C# Reference"
+title: "namespace keyword"
 ms.date: 08/19/2021
 f1_keywords: 
   - "namespace_CSharpKeyword"
@@ -19,6 +19,32 @@ The `namespace` keyword is used to declare a scope that contains a set of relate
 *File scoped namespace declarations* enable you to declare that all types in a file are in a single namespace. File scoped namespace declarations are available with C# 10. The following example is similar to the previous example, but uses a file scoped namespace declaration:
 
 :::code language="csharp" source="snippets/filescopednamespace.cs" :::
+
+## Using Statements in File Scoped Namespaces
+
+When using *file-scoped namespaces*, the placement of `using` statements affects their scope within the file. File-scoped namespaces lower to the equivalent traditional namespace declaration that ends with a closing bracket at the end of the file. This behavior determines where `using` directives are applied as follows:
+
+- If the `using` statements are placed before the file-scoped namespace declaration, they are treated as being outside of the namespace and are interpreted as fully-qualified namespaces.
+- If the `using` statements are placed after the file-scoped namespace declaration, they are scoped within the namespace itself.
+
+For example:
+
+```csharp
+// This using is outside the namespace scope, so it applies globally
+using System;
+
+namespace SampleNamespace; // File-scoped namespace declaration
+
+// This using is inside the namespace scope
+using System.Text;
+
+public class SampleClass
+{
+    // Class members...
+}
+```
+
+In the above example, `System` is globally accessible, while `System.Text` applies only within `SampleNamespace`.
 
 The preceding example doesn't include a nested namespace. File scoped namespaces can't include additional namespace declarations. You cannot declare a nested namespace or a second file-scoped namespace:
 

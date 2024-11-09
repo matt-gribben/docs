@@ -3,7 +3,7 @@ title: "Build resilient HTTP apps: Key development patterns"
 description: Learn how to build resilient HTTP apps using the Microsoft.Extensions.Http.Resilience NuGet package.
 author: IEvangelist
 ms.author: dapine
-ms.date: 10/20/2023
+ms.date: 07/01/2024
 ---
 
 # Build resilient HTTP apps: Key development patterns
@@ -81,13 +81,26 @@ The preceding code adds the standard resilience handler to the <xref:System.Net.
 
 The default configuration chains five resilience strategies in the following order (from the outermost to the innermost):
 
-| Order | Strategy | Description |
-|--:|--|--|
-| **1** | Rate limiter | The rate limiter pipeline limits the maximum number of concurrent requests being sent to the dependency. |
-| **2** | Total request timeout | The total request timeout pipeline applies an overall timeout to the execution, ensuring that the request, including retry attempts, doesn't exceed the configured limit. |
-| **3** | Retry | The retry pipeline retries the request in case the dependency is slow or returns a transient error. |
-| **4** | Circuit breaker | The circuit breaker blocks the execution if too many direct failures or timeouts are detected. |
-| **5** | Attempt timeout | The attempt timeout pipeline limits each request attempt duration and throws if it's exceeded. |
+| Order | Strategy | Description | Defaults |
+|--:|--|--|--|
+| **1** | Rate limiter | The rate limiter pipeline limits the maximum number of concurrent requests being sent to the dependency. | Queue: `0`<br>Permit: `1_000` |
+| **2** | Total timeout | The total request timeout pipeline applies an overall timeout to the execution, ensuring that the request, including retry attempts, doesn't exceed the configured limit. | Total timeout: 30s |
+| **3** | Retry | The retry pipeline retries the request in case the dependency is slow or returns a transient error. | Max retries: `3`<br>Backoff: `Exponential`<br>Use jitter: `true`<br>Delay:2s |
+| **4** | Circuit breaker | The circuit breaker blocks the execution if too many direct failures or timeouts are detected. | Failure ratio: 10%<br>Min throughput: `100`<br>Sampling duration: 30s<br>Break duration: 5s |
+| **5** | Attempt timeout | The attempt timeout pipeline limits each request attempt duration and throws if it's exceeded. | Attempt timeout: 10s |
+
+#### Retries and circuit breakers
+
+The retry and circuit breaker strategies both handle a set of specific HTTP status codes and exceptions. Consider the following HTTP status codes:
+
+- HTTP 500 and above (Server errors)
+- HTTP 408 (Request timeout)
+- HTTP 429 (Too many requests)
+
+Additionally, these strategies handle the following exceptions:
+
+- `HttpRequestException`
+- `TimeoutRejectedException`
 
 ## Add standard hedging handler
 
@@ -108,13 +121,13 @@ The standard hedging uses a pool of circuit breakers to ensure that unhealthy en
 
 The preceding code adds the standard hedging handler to the <xref:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder>. The default configuration chains five resilience strategies in the following order (from the outermost to the innermost):
 
-| Order | Strategy | Description |
-|--:|--|--|
-| **1** | Total request timeout | The total request timeout pipeline applies an overall timeout to the execution, ensuring that the request, including hedging attempts, doesn't exceed the configured limit. |
-| **2** | Hedging | The hedging strategy executes the requests against multiple endpoints in case the dependency is slow or returns a transient error. Routing is options, by default it just hedges the URL provided by the original <xref:System.Net.Http.HttpRequestMessage>. |
-| **3** | Rate limiter (per endpoint) | The rate limiter pipeline limits the maximum number of concurrent requests being sent to the dependency. |
-| **4** | Circuit breaker (per endpoint) | The circuit breaker blocks the execution if too many direct failures or timeouts are detected. |
-| **5** | Attempt timeout (per endpoint) | The attempt timeout pipeline limits each request attempt duration and throws if it's exceeded. |
+| Order | Strategy | Description | Defaults |
+|--:|--|--|--|
+| **1** | Total request timeout | The total request timeout pipeline applies an overall timeout to the execution, ensuring that the request, including hedging attempts, doesn't exceed the configured limit. | Total timeout: 30s |
+| **2** | Hedging | The hedging strategy executes the requests against multiple endpoints in case the dependency is slow or returns a transient error. Routing is options, by default it just hedges the URL provided by the original <xref:System.Net.Http.HttpRequestMessage>. | Min attempts: `1`<br>Max attempts: `10`<br>Delay: 2s |
+| **3** | Rate limiter (per endpoint) | The rate limiter pipeline limits the maximum number of concurrent requests being sent to the dependency. | Queue: `0`<br>Permit: `1_000` |
+| **4** | Circuit breaker (per endpoint) | The circuit breaker blocks the execution if too many direct failures or timeouts are detected. | Failure ratio: 10%<br>Min throughput: `100`<br>Sampling duration: 30s<br>Break duration: 5s |
+| **5** | Attempt timeout (per endpoint) | The attempt timeout pipeline limits each request attempt duration and throws if it's exceeded. | Timeout: 10s |
 
 ### Customize hedging handler route selection
 
@@ -221,3 +234,53 @@ The preceding diagram depicts:
   - If the response is unsuccessful (HTTP non-200), the resilience pipeline employs the configured resilience strategies.
 
 While this is a simple example, it demonstrates how the resilience strategies can be used to handle transient errors. For more information, see [Polly docs: Strategies](https://www.pollydocs.org/strategies).
+
+## Known issues
+
+The following sections detail various known issues.
+
+### Compatibility with the `Grpc.Net.ClientFactory` package
+
+If you're using `Grpc.Net.ClientFactory` version `2.63.0` or earlier, then enabling the standard resilience or hedging handlers for a gRPC client could cause a runtime exception. Specifically, consider the following code sample:
+
+```csharp
+services
+    .AddGrpcClient<Greeter.GreeterClient>()
+    .AddStandardResilienceHandler();
+```
+
+The preceding code results in the following exception:
+
+```Output
+System.InvalidOperationException: The ConfigureHttpClient method is not supported when creating gRPC clients. Unable to create client with name 'GreeterClient'.
+```
+
+To resolve this issue, we recommend upgrading to `Grpc.Net.ClientFactory` version `2.64.0` or later.
+
+There's a build time check that verifies if you're using `Grpc.Net.ClientFactory` version `2.63.0` or earlier, and if you are the check produces a compilation warning. You can suppress the warning by setting the following property in your project file:
+
+```xml
+<PropertyGroup>
+  <SuppressCheckGrpcNetClientFactoryVersion>true</SuppressCheckGrpcNetClientFactoryVersion>
+</PropertyGroup>
+```
+
+### Compatibility with .NET Application Insights
+
+If you're using .NET Application Insights, then enabling resilience functionality in your application could cause all Application Insights telemetry to be missing. The issue occurs when resilience functionality is registered before Application Insights services. Consider the following sample causing the issue:
+
+```csharp
+// At first, we register resilience functionality.
+services.AddHttpClient().AddStandardResilienceHandler();
+
+// And then we register Application Insights. As a result, Application Insights doesn't work.
+services.AddApplicationInsightsTelemetry();
+```
+
+The issue is caused by the following [bug](https://github.com/microsoft/ApplicationInsights-dotnet/issues/2879) in Application Insights and can be fixed by registering Application Insights services before resilience functionality, as shown below:
+
+```csharp
+// We register Application Insights first, and now it will be working correctly.
+services.AddApplicationInsightsTelemetry();
+services.AddHttpClient().AddStandardResilienceHandler();
+```

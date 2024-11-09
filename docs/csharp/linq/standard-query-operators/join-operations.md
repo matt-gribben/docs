@@ -1,12 +1,14 @@
 ---
-title: "Join Operations (C#)"
+title: "Join Operations"
 description: A join of two data sources associates objects with objects that share an attribute across data sources. Learn about join methods in the LINQ framework in C#.
-ms.date: 02/16/2024
+ms.date: 05/29/2024
 no-loc: [Join, GroupJoin]
 ---
 # Join Operations in LINQ
 
 A *join* of two data sources is the association of objects in one data source with objects that share a common attribute in another data source.
+
+[!INCLUDE [Prerequisites](../includes/linq-syntax.md)]
 
 Joining is an important operation in queries that target data sources whose relationships to each other can't be followed directly. In object-oriented programming, joining could mean a correlation between objects that isn't modeled, such as the backwards direction of a one-way relationship. An example of a one-way relationship is a `Student` class that has a property of type `Department` that represents the major, but the `Department` class doesn't have a property that is a collection of `Student` objects. If you have a list of `Department` objects and you want to find all the students in each department, you could use a join operation to find them.
 
@@ -23,11 +25,7 @@ The following illustration shows a conceptual view of two sets and the elements 
 |Join|Joins two sequences based on key selector functions and extracts pairs of values.|`join … in … on … equals …`|<xref:System.Linq.Enumerable.Join%2A?displayProperty=nameWithType><br /><br /> <xref:System.Linq.Queryable.Join%2A?displayProperty=nameWithType>|
 |GroupJoin|Joins two sequences based on key selector functions and groups the resulting matches for each element.|`join … in … on … equals … into …`|<xref:System.Linq.Enumerable.GroupJoin%2A?displayProperty=nameWithType><br /><br /> <xref:System.Linq.Queryable.GroupJoin%2A?displayProperty=nameWithType>|
 
-The following examples in this article use the common data sources for this area:
-
-:::code language="csharp" source="./snippets/standard-query-operators/DataSources.cs" id="QueryDataSource":::
-
-Each `Student` has a grade level, a primary department, and a series of scores. A `Teacher` also has a `City` property that identifies the campus where the teacher holds classes. A `Department` has a name, and a reference to a `Teacher` who serves as the department head.
+[!INCLUDE [Datasources](../includes/data-sources-definition.md)]
 
 The following example uses the `join … in … on … equals …` clause to join two sequences based on specific value:
 

@@ -1,5 +1,5 @@
 ---
-title: "Tuple types - C# reference"
+title: "Tuple types"
 description: "C# tuples: lightweight data structures that you can use to group loosely related data elements. Tuples introduce a type that contains multiple public members."
 ms.date: 04/24/2023
 helpviewer_keywords:
@@ -160,7 +160,7 @@ C# tuples, which are backed by <xref:System.ValueTuple?displayProperty=nameWithT
 For more information, see:
 
 - [Tuple types](/dotnet/csharp/language-reference/language-specification/types#8311-tuple-types)
-- [Tuple equality operators](/dotnet/csharp/language-reference/language-specification/expressions#111211-tuple-equality-operators)
+- [Tuple equality operators](/dotnet/csharp/language-reference/language-specification/expressions#121211-tuple-equality-operators)
 
 ## See also
 

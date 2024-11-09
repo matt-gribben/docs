@@ -1,7 +1,7 @@
 ---
-description: "Method Parameters"
-title: "Method parameters are passed by value. Modifiers enable pass-by-reference semantics, including distinctions such as read-only, and `out` parameters. Learn the different parameter passing modes and how to use them. The params modifier allows a series of optional arguments."
-ms.date: 10/05/2023
+title: "Method Parameters"
+description: "Method parameters are passed by value. Modifiers enable pass-by-reference semantics, including distinctions such as read-only, and `out` parameters. The params modifier allows a series of optional arguments."
+ms.date: 05/17/2024
 helpviewer_keywords: 
   - "methods [C#], parameters"
   - "method parameters [C#]"
@@ -35,7 +35,7 @@ How an argument is passed, and whether it's a reference type or value type contr
   - If the method assigns the parameter to refer to a different object, those changes **aren't** visible from the caller.
   - If the method modifies the state of the object referred to by the parameter, those changes **are** visible from the caller.
 - When you pass a *value* type *by reference*:
-  - If the method assigns the parameter to refer to a different object, those changes **aren't** visible from the caller.
+  - If the method assigns the parameter to refer to a different object using `ref =`, those changes **aren't** visible from the caller.
   - If the method modifies the state of the object referred to by the parameter, those changes **are** visible from the caller.
 - When you pass a *reference* type *by reference*:
   - If the method assigns the parameter to refer to a different object, those changes **are** visible from the caller.
@@ -58,9 +58,9 @@ Informally, you can think of these scopes as the mechanism to ensure your code n
 
 You apply one of the following modifiers to a parameter declaration to pass arguments by reference instead of by value:
 
-- [`ref`](#ref-readonly-modifier): The argument must be initialized before calling the method. The method can assign a new value to the parameter, but isn't required to do so.
+- [`ref`](#ref-parameter-modifier): The argument must be initialized before calling the method. The method can assign a new value to the parameter, but isn't required to do so.
 - [`out`](#out-parameter-modifier): The calling method isn't required to initialize the argument before calling the method. The method must assign a value to the parameter.
-- [`readonly ref`](#ref-parameter-modifier): The argument must be initialized before calling the method. The method can't assign a new value to the parameter.
+- [`ref readonly`](#ref-readonly-modifier): The argument must be initialized before calling the method. The method can't assign a new value to the parameter.
 - [`in`](#in-parameter-modifier): The argument must be initialized before calling the method. The method can't assign a new value to the parameter. The compiler might create a temporary variable to hold a copy of the argument to `in` parameters.
 
 Members of a class can't have signatures that differ only by `ref`, `ref readonly`, `in`, or `out`. A compiler error occurs if the only difference between two members of a type is that one of them has a `ref` parameter and the other has an `out`, `ref readonly`, or `in` parameter. However, methods can be overloaded when one method has a `ref`, `ref readonly`, `in`, or `out` parameter and the other has a parameter that is passed by value, as shown in the following example. In other situations that require signature matching, such as hiding or overriding, `in`, `ref`, `ref readonly`, and `out` are part of the signature and don't match each other.
@@ -79,7 +79,7 @@ When you use these modifiers, they describe how the argument is used:
 - `ref readonly` means the method reads, but can't write the value of the argument. The argument *should* be passed by reference.
 - `in` means the method reads, but can't write the value of the argument. The argument will be passed by reference or through a temporary variable.
 
-Properties aren't variables. They're methods, and can't be passed to `ref` parameters. You can't use the previous parameter modifiers in the following kinds of methods:
+You can't use the previous parameter modifiers in the following kinds of methods:
 
 - Async methods, which you define by using the [async](async.md) modifier.
 - Iterator methods, which include a [yield return](../statements/yield.md) or `yield break` statement.
@@ -90,6 +90,8 @@ Properties aren't variables. They're methods, and can't be passed to `ref` param
 - The `ref` keyword can't be used on the first argument of an extension method when the argument isn't a `struct`, or a generic type not constrained to be a struct.
 - The `ref readonly` and `in` keywords can't be used unless the first argument is a `struct`.
 - The `ref readonly` and `in` keywords can't be used on any generic type, even when constrained to be a struct.
+
+Properties aren't variables. They're methods. Properties can't be arguments for `ref` parameters.
 
 ### `ref` parameter modifier
 
@@ -197,16 +199,41 @@ The only method call where the argument is passed by reference is the final one.
 
 No other parameters are permitted after the `params` keyword in a method declaration, and only one `params` keyword is permitted in a method declaration.
 
-If the declared type of the `params` parameter isn't a single-dimensional array, compiler error [CS0225](../../misc/cs0225.md) occurs.
+The declared type of the `params` parameter must be a collection type. Recognized collection types are:
+
+- A single dimensional *array type* `T[]`, in which case the *element type* is `T`.
+- A *span type*:
+  - `System.Span<T>`
+  - `System.ReadOnlySpan<T>`  
+  Here, the *element type* is `T`.
+- A *type* with an accessible *create method* with a corresponding *element type*. The [*create method*](../operators/collection-expressions.md#collection-builder) is identified using the same attribute used for [collection expressions](../operators/collection-expressions.md).
+- A *struct* or *class type* that implements <xref:System.Collections.Generic.IEnumerable%601?displayProperty=fullName> where:
+  - The *type* has a constructor that can be invoked with no arguments, and the constructor is at least as accessible as the declaring member.
+  - The *type* has an instance (not an extension) method `Add` where:
+    - The method can be invoked with a single value argument.
+    - If the method is generic, the type arguments can be inferred from the argument.
+    - The method is at least as accessible as the declaring member.
+  Here, the *element type* is the *iteration type* of the *type*.
+- An *interface type*:
+  - <xref:System.Collections.Generic.IEnumerable%601?displayProperty=fullName>
+  - <xref:System.Collections.Generic.IReadOnlyCollection%601?displayProperty=fullName>
+  - <xref:System.Collections.Generic.IReadOnlyList%601?displayProperty=fullName>
+  - <xref:System.Collections.Generic.ICollection%601?displayProperty=fullName>
+  - <xref:System.Collections.Generic.IList%601?displayProperty=fullName>
+  Here, the *element type* is `T`.
+
+Before C# 13, the parameter must be a single dimensional array.
 
 When you call a method with a `params` parameter, you can pass in:
 
 - A comma-separated list of arguments of the type of the array elements.
-- An array of arguments of the specified type.
+- A collection of arguments of the specified type.
 - No arguments. If you send no arguments, the length of the `params` list is zero.
 
 The following example demonstrates various ways in which arguments can be sent to a `params` parameter.
 
-[!code-csharp[csrefKeywordsMethodParams#5](~/samples/snippets/csharp/VS_Snippets_VBCSharp/csrefKeywordsMethodParams/CS/csrefKeywordsMethodParams.cs#5)]
+:::code language="csharp" source="snippets/ParameterModifiers.cs" id="ParamsModifierExamples":::
 
-- [Argument lists](~/_csharpstandard/standard/expressions.md#1262-argument-lists) in the [C# Language Specification](~/_csharpstandard/standard/README.md). The language specification is the definitive source for C# syntax and usage.
+Overload resolution can cause ambiguity when the argument for a `params` parameter is a collection type. The collection type of the argument must be convertible to the collection type of the parameter. When different overloads provide better conversions for that parameter, that method may be better. However, if the argument to the `params` parameter is either discrete elements or missing, all overloads with different `params` parameter types are equal for that parameter.
+
+For more details, see the section on [Argument lists](~/_csharpstandard/standard/expressions.md#1262-argument-lists) in the [C# Language Specification](~/_csharpstandard/standard/README.md). The language specification is the definitive source for C# syntax and usage.

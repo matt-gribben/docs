@@ -1,6 +1,6 @@
 ---
 description: "C# Compiler Options for security. These options control signing assemblies or address space layout."
-title: "C# Compiler Options - security options"
+title: "Compiler Options - security options"
 ms.date: 03/12/2021
 f1_keywords:
   - "cs.build.options"
@@ -20,6 +20,9 @@ The following options control compiler security options. The new MSBuild syntax 
 - **KeyFile** / `-keyfile` : Specify a strong name key file.
 - **KeyContainer** / `-keycontainer`: Specify a strong name key container.
 - **HighEntropyVA** / `-highentropyva`: Enable high-entropy Address Space Layout Randomization (ASLR)
+
+> [!NOTE]
+> Refer to [Compiler options](index.md#how-to-set-options) for more information on configuring these options for your project.
 
 ## PublicSign
 

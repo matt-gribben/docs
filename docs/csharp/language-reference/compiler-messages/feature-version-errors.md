@@ -53,6 +53,8 @@ f1_keywords:
   - "CS9194"
   - "CS9202"
   - "CS9211"
+  - "CS9240"
+  - "CS9260"
 helpviewer_keywords:
   - "CS0171"
   - "CS0188"
@@ -105,7 +107,9 @@ helpviewer_keywords:
   - "CS9194"
   - "CS9202"
   - "CS9211"
-ms.date: 11/02/2023
+  - "CS9240"
+  - "CS9260"
+ms.date: 11/06/2024
 ---
 # Resolve warnings related to language features and versions
 
@@ -146,6 +150,8 @@ That's be design. The text closely matches the text of the compiler error / warn
 - **CS9194**: *Argument may not be passed with the `ref` keyword. To pass `ref` arguments to `in` parameters, upgrade to language version 12 or greater.*
 - **CS9202**: *Feature is not available in C# 12.0. Please use newer language version*
 - **CS9211**: *The diagnosticId argument to the 'Experimental' attribute must be a valid identifier.*
+- **CS9240**: *Target runtime doesn't support by-ref-like generics.*
+- **CS9260**: *Feature is not available in C# 13.0. Please use newer language version**
 
 In addition, the following errors and warnings relate to struct initialization changes in recent versions:
 

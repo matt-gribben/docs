@@ -65,7 +65,7 @@ The API can throw an <xref:System.InvalidOperationException> if the hard limit i
 
 ## Globalization for mobile apps
 
-Mobile apps on iOS, tvOS, and MacCatalyst can opt into a new *hybrid* globalization mode that uses a lighter ICU bundle. In hybrid mode, globalization data is partially pulled from the ICU bundle and partially from calls into Native APIs. Hybrid mode serves all the [locales supported by mobile](https://github.com/dotnet/icu/blob/dotnet/main/icu-filters/icudt_mobile.json).
+Mobile apps on iOS, tvOS, and MacCatalyst can opt in to a new *hybrid* globalization mode that uses a lighter ICU bundle. In hybrid mode, globalization data is partially pulled from the ICU bundle and partially from calls into Native APIs. Hybrid mode serves all the [locales supported by mobile](https://github.com/dotnet/icu/blob/dotnet/main/icu-filters/icudt_mobile.json).
 
 Hybrid mode is most suitable for apps that can't work in invariant globalization mode and that use cultures that were trimmed from ICU data on mobile. You can also use it when you want to load a smaller ICU data file. (The *icudt_hybrid.dat* file is 34.5 % smaller than the default ICU data file *icudt.dat*.)
 
@@ -275,7 +275,7 @@ For more information, see [Use a built-in naming policy](../../../standard/seria
 
 You can now deserialize onto read-only fields or properties (that is, those that don't have a `set` accessor).
 
-To opt into this support globally, set a new option, <xref:System.Text.Json.JsonSerializerOptions.PreferredObjectCreationHandling>, to <xref:System.Text.Json.Serialization.JsonObjectCreationHandling.Populate?displayProperty=nameWithType>. If compatibility is a concern, you can also enable the functionality more granularly by placing the `[JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]` attribute on specific types whose properties are to be populated, or on individual properties.
+To opt in to this support globally, set a new option, <xref:System.Text.Json.JsonSerializerOptions.PreferredObjectCreationHandling>, to <xref:System.Text.Json.Serialization.JsonObjectCreationHandling.Populate?displayProperty=nameWithType>. If compatibility is a concern, you can also enable the functionality more granularly by placing the `[JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]` attribute on specific types whose properties are to be populated, or on individual properties.
 
 For example, consider the following code that deserializes into a `CustomerInfo` type that has two read-only properties.
 
@@ -500,11 +500,11 @@ IDataView predictions = model.Transform(split.TestSet);
 
 .NET 8 introduces several new types aimed at improving app performance.
 
-- The new <xref:System.Collections.Frozen?displayProperty=fullName> namespace includes the collection types <xref:System.Collections.Frozen.FrozenDictionary%602> and <xref:System.Collections.Frozen.FrozenSet%601>. These types don't allow any changes to keys and values once a collection created. That requirement allows faster read operations (for example, `TryGetValue()`). These types are particularly useful for collections that are populated on first use and then persisted for the duration of a long-lived service, for example:
+- The new <xref:System.Collections.Frozen?displayProperty=fullName> namespace includes the collection types <xref:System.Collections.Frozen.FrozenDictionary%602> and <xref:System.Collections.Frozen.FrozenSet%601>. These types don't allow any changes to keys and values once a collection is created. That requirement allows faster read operations (for example, `TryGetValue()`). These types are particularly useful for collections that are populated on first use and then persisted for the duration of a long-lived service, for example:
 
   ```csharp
   private static readonly FrozenDictionary<string, bool> s_configurationData =
-      LoadConfigurationData().ToFrozenDictionary(optimizeForReads: true);
+      LoadConfigurationData().ToFrozenDictionary();
 
   // ...
   if (s_configurationData.TryGetValue(key, out bool setting) && setting)
@@ -561,7 +561,7 @@ Even if you don't explicitly use `Vector512`-specific or `Avx512F`-specific inst
 
 ### Data validation
 
-The <xref:System.ComponentModel.DataAnnotations?displayProperty=fullName> namespace includes new data validation attributes intended for validation scenarios in cloud-native services. While the pre-existing `DataAnnotations` validators are geared towards typical UI data-entry validation, such as fields on a form, the new attributes are designed to validate non-user-entry data, such as [configuration options](../../extensions/options.md#options-validation). In addition to the new attributes, new properties were added to the <xref:System.ComponentModel.DataAnnotations.RangeAttribute> and <xref:System.ComponentModel.DataAnnotations.RequiredAttribute> types.
+The <xref:System.ComponentModel.DataAnnotations?displayProperty=fullName> namespace includes new data validation attributes intended for validation scenarios in cloud-native services. While the pre-existing `DataAnnotations` validators are geared towards typical UI data-entry validation, such as fields on a form, the new attributes are designed to validate non-user-entry data, such as [configuration options](../../extensions/options.md#options-validation). In addition to the new attributes, new properties were added to the <xref:System.ComponentModel.DataAnnotations.RangeAttribute> type.
 
 | New API | Description |
 |--|--|
@@ -775,11 +775,9 @@ The new <xref:Microsoft.Extensions.Diagnostics.Metrics.Testing.MetricCollector%6
 
 ### System.Numerics.Tensors.TensorPrimitives
 
-The updated [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) NuGet package includes APIs in the new <xref:System.Numerics.Tensors.TensorPrimitives> namespace that add support for tensor operations. The tensor primitives optimize data-intensive workloads like those of AI and machine learning.
+The updated [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) NuGet package includes APIs in the new <xref:System.Numerics.Tensors.TensorPrimitives?displayProperty=fullName> type that add support for tensor operations. The tensor primitives optimize data-intensive workloads like those of AI and machine learning.
 
-AI workloads like semantic search and retrieval-augmented generation (RAG) extend the natural language capabilities of large language models such as ChatGPT by augmenting prompts with relevant data. For these workloads, operations on vectors&mdash;like *cosine similarity* to find the most relevant data to answer a question&mdash;are crucial. The System.Numerics.Tensors.TensorPrimitives package provides APIs for vector operations, meaning you don't need to take an external dependency or write your own implementation.
-
-This package replaces the [System.Numerics.Tensors package](https://www.nuget.org/packages/System.Numerics.Tensors).
+AI workloads like semantic search and retrieval-augmented generation (RAG) extend the natural language capabilities of large language models, such as ChatGPT, by augmenting prompts with relevant data. For these workloads, operations on vectors&mdash;like *cosine similarity* to find the most relevant data to answer a question&mdash;are crucial. The <xref:System.Numerics.Tensors.TensorPrimitives> type provides APIs for vector operations.
 
 For more information, see the [Announcing .NET 8 RC 2 blog post](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8-rc2/).
 
