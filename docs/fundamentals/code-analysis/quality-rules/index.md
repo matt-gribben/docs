@@ -12,6 +12,7 @@ ms.date: 01/31/2024
 The following table lists code quality analysis rules.
 
 > [!div class="mx-tdCol2BreakAll"]
+>
 > | Rule ID and warning | Description |
 > | ------------------- | ----------- |
 > | [CA1000: Do not declare static members on generic types](ca1000.md) | When a static member of a generic type is called, the type argument must be specified for the type. When a generic instance member that does not support inference is called, the type argument must be specified for the member. In these two cases, the syntax for specifying the type argument is different and easily confused. |
@@ -334,6 +335,7 @@ The following table lists code quality analysis rules.
 > | [IL3001: Avoid accessing Assembly file path when publishing as a single-file](../../../core/deploying/single-file/warnings/il3001.md) | Avoid accessing Assembly file path when publishing as a single file. |
 > | [IL3002: Avoid calling members annotated with 'RequiresAssemblyFilesAttribute' when publishing as a single file](../../../core/deploying/single-file/warnings/il3002.md) | Avoid calling members annotated with 'RequiresAssemblyFilesAttribute' when publishing as a single file|
 > | [IL3003: 'RequiresAssemblyFilesAttribute' annotations must match across all interface implementations or overrides.](../../../core/deploying/single-file/warnings/il3003.md) | 'RequiresAssemblyFilesAttribute' annotations must match across all interface implementations or overrides.|
+> | [IL3005: `RequiresAssemblyFilesAttribute` cannot be placed directly on application entry point.](../../../core/deploying/single-file/warnings/il3005.md)|`RequiresAssemblyFilesAttribute` cannot be placed directly on application entry point. |
 
 ## Legend
 
